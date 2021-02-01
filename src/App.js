@@ -2,7 +2,7 @@ import { Fragment, useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { initFirebase } from "./firebaseConfig";
 
-import { Login } from "./Login";
+import { Login } from "./screens/Login";
 import { Home } from './screens/Home';
 import { About } from "./screens/About";
 import { Navbar } from "./components/Navbar";
@@ -96,7 +96,7 @@ function App() {
                             <div className="container pt-4">
                                 <AppAlert/>
                                 <Switch>
-                                    {/*<Route path={'/login'} rend={Login}/>*/}
+                                    {/*<Route path={'/login'} rend={Index}/>*/}
                                     <Route path={'/'} exact component={Home}/>
                                     <Route path={'/about'} exact component={About}/>
                                 </Switch>
