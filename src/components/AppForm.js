@@ -1,26 +1,32 @@
 import { useState, useContext } from 'react';
-import { AlertContext } from "../context/alert/alertContext";
-import {FirebaseContext} from "../context/firebase/firebaseContext";
+import {useDispatch, useSelector} from "react-redux";
+
+import { show } from "../store/actions/alert";
+import { add } from "../store/actions/stocks";
 
 export const AppForm = () => {
+
+    const dispatch = useDispatch();
     const [value, setValue] = useState('');
-    const alert = useContext(AlertContext);
-    const firebase = useContext(FirebaseContext);
+    // const {data, loading} = useSelector(state => state.stock);
+
+    const showAlert = (text, status) => show(dispatch)(text, status);
+    const addStock = title => add(dispatch)(title);
 
     const submitHandler = event => {
         event.preventDefault();
 
         if (value.trim()){
-            firebase.addStock(value.trim())
+            addStock(value.trim())
             .then(() => {
-                alert.show('stock added', 'success');
+                showAlert('stock added', 'success');
             }).catch(() => {
-                alert.show('error stock added', 'success');
+                showAlert('error stock added', 'success');
             }).finally(() => {
                 setValue('')
             })
         }else{
-            alert.show('Insert ticker or title stock')
+            showAlert('Insert ticker or title stock', 'warning');
         }
     }
 

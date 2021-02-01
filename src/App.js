@@ -1,14 +1,12 @@
 import { Fragment, useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { initFirebase } from "./firebaseConfig";
+import { app, auth } from "./firebase";
 
 import { Login } from "./screens/Login";
 import { Home } from './screens/Home';
 import { About } from "./screens/About";
 import { Navbar } from "./components/Navbar";
 import { AppAlert } from "./components/AppAlert";
-import { AlertState } from "./context/alert/AlertState";
-import { FirebaseState } from "./context/firebase/FirebaseState";
 
 function App() {
     const [user, setUser] = useState('');
@@ -31,9 +29,7 @@ function App() {
 
     const handleLogin = () => {
         clearErrors();
-        initFirebase
-            .auth()
-            .signInWithEmailAndPassword(email, password)
+        auth.signInWithEmailAndPassword(email, password)
             .catch(error => {
                 switch (error.code) {
                     case "auth/invalid-email":
@@ -50,9 +46,7 @@ function App() {
 
     const handleSignup = () => {
         clearErrors();
-        initFirebase
-            .auth()
-            .createUserWithEmailAndPassword(email, password)
+        auth.createUserWithEmailAndPassword(email, password)
             .catch(error => {
                 switch (error.code) {
                     case "auth/email-already-use":
@@ -66,13 +60,11 @@ function App() {
             })
     }
     const handleLogout = () => {
-        initFirebase
-            .auth()
-            .signOut();
+        auth.signOut();
     }
 
     const authListener = () => {
-        initFirebase.auth().onAuthStateChanged(user => {
+        auth.onAuthStateChanged(user => {
             if(user){
                 clearInputs();
                 setUser(user)
@@ -89,21 +81,17 @@ function App() {
     return (
         <Fragment>
             {user ? (
-                <FirebaseState>
-                    <AlertState>
-                        <BrowserRouter>
-                            <Navbar handleLogout={handleLogout}/>
-                            <div className="container pt-4">
-                                <AppAlert/>
-                                <Switch>
-                                    {/*<Route path={'/login'} rend={Index}/>*/}
-                                    <Route path={'/'} exact component={Home}/>
-                                    <Route path={'/about'} exact component={About}/>
-                                </Switch>
-                            </div>
-                        </BrowserRouter>
-                    </AlertState>
-                </FirebaseState>
+                <BrowserRouter>
+                    <Navbar handleLogout={handleLogout}/>
+                    <div className="container pt-4">
+                        <AppAlert/>
+                        <Switch>
+                            {/*<Route path={'/login'} rend={Index}/>*/}
+                            <Route path={'/'} exact component={Home}/>
+                            <Route path={'/about'} exact component={About}/>
+                        </Switch>
+                    </div>
+                </BrowserRouter>
             ) : (
                 <Login
                     email={email}

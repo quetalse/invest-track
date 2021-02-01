@@ -1,10 +1,16 @@
-import { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { CSSTransition } from "react-transition-group";
-import { AlertContext } from "../context/alert/alertContext";
+
+/** ACTIONS **/
+import { hide } from "../store/actions/alert";
 
 export const AppAlert = () => {
 
-    const {alert, hide} = useContext(AlertContext);
+    const dispatch = useDispatch();
+    const alert = useSelector(state => state.alert)
+
+    const hideAlert = () => hide(dispatch)()
+
 
     return (
         <CSSTransition
@@ -17,7 +23,7 @@ export const AppAlert = () => {
             <div className={`alert alert-${alert.type || 'warning'} alert-dismissible`}>
                 <strong>Warning!</strong>
                 &nbsp; {alert.text}
-                <button onClick={hide} type="button" className="close" aria-label="Close">
+                <button onClick={hideAlert} type="button" className="close" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>

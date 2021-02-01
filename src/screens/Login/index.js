@@ -1,3 +1,6 @@
+// import {Card} from "react-bootstrap";
+// export { Form, Button, Card } from 'react-bootstrap';
+
 export const Login = (props) => {
 
     const {
@@ -14,6 +17,12 @@ export const Login = (props) => {
     } = props;
 
     return(
+        // <Card>
+        //
+        // </Card>
+        // <div className="w-100 text-center mt-2">
+        //     Already have an account? L
+        // </div>
         <section className="login">
             <div className="loginContainer">
                 <label>Username</label>
