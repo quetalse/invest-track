@@ -13,8 +13,8 @@ export const Home = () => {
     const dispatch = useDispatch();
     const {data, loading} = useSelector(state => state.stocks);
 
-    const getAllStocks = () => getAll(dispatch)()
-    const removeStock = id => remove(dispatch)(id)
+    const getAllStocks = () => dispatch(getAll());
+    const removeStock = id => dispatch(remove(id));
 
     useEffect(() => {
         getAllStocks()

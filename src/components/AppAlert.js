@@ -9,8 +9,7 @@ export const AppAlert = () => {
     const dispatch = useDispatch();
     const alert = useSelector(state => state.alert)
 
-    const hideAlert = () => hide(dispatch)()
-
+    const hideAlert = () => dispatch(hide())
 
     return (
         <CSSTransition
