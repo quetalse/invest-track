@@ -2,11 +2,13 @@ import { Fragment, useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { app, auth } from "./firebase";
 
+import { ProtectedRoute } from "./components/ProtectedRoute";
 import { Login } from "./screens/Login";
 import { Home } from './screens/Home';
 import { About } from "./screens/About";
 import { Navbar } from "./components/Navbar";
 import { AppAlert } from "./components/AppAlert";
+import {NotFound} from "./screens/NotFound";
 
 function App() {
     // const [user, setUser] = useState('');
@@ -82,13 +84,14 @@ function App() {
     return (
         <Fragment>
                 <BrowserRouter>
-                    {/*<Navbar handleLogout={handleLogout}/>*/}
+                    <Navbar/>
                     <div className="container pt-4">
                         <AppAlert/>
                         <Switch>
                             <Route path={'/login'} component={Login}/>
-                            <Route path={'/'} exact component={Home}/>
-                            <Route path={'/about'} exact component={About}/>
+                            <ProtectedRoute path={'/'} exact component={Home}/>
+                            <ProtectedRoute path={'/overview'} exact component={About}/>
+                            <Route component={NotFound} />
                         </Switch>
                     </div>
                 </BrowserRouter>

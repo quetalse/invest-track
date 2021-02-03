@@ -77,9 +77,6 @@ export const setUser = (user) => ({
 });
 
 export const setEmail = (email) => {
-
-    console.log('email', email)
-
     return{
         type: SET_EMAIL,
         payload: email
