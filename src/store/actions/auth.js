@@ -128,8 +128,11 @@ export const signUp = ({email, password}) => dispatch => {
     dispatch(clearErrors());
     auth.createUserWithEmailAndPassword(email, password)
         .catch(error => {
+            console.log(error.code)
             switch (error.code) {
-                case "auth/email-already-use":
+
+
+                case "auth/email-already-in-use":
                 case "auth/invalid-email":
                     dispatch(emailError(error.message));
                     break;

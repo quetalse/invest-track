@@ -2,6 +2,7 @@
 // export { Form, Button, Card } from 'react-bootstrap';
 import {auth} from "../../firebase";
 import {useEffect} from "react";
+import Typewriter from 'typewriter-effect';
 
 import { setUser, signIn, signUp, setEmail, setPassword, setAccount, clearInputs } from "../../store/actions/auth";
 import {useDispatch, useSelector} from "react-redux";
@@ -60,6 +61,35 @@ export const Login = (props) => {
 
     return(
         <div className="col-sm-9 col-md-7 col-lg-6 mx-auto">
+            <div className="login-logo my-3">
+                <Typewriter
+                    // options={{
+                    //     // wrapperClassName: 'login-logo my-3',
+                    //     strings: ['Hello', 'it\'s Invest Track'],
+                    //     autoStart: true,
+                    //     delay: 30,
+                    //     deleteSpeed: 30,
+                    //     // onCreateTextNode: () => {return '<p>Invest Track</p>p>'}
+                    //     // loop: true,
+                    // }}
+                    onInit={(typewriter) => {
+                        typewriter.typeString('<strong style="font-size: 3.9rem; text-align: left">Hello! it\'s </strong>')
+                            // .callFunction(() => {
+                            //     console.log('String typed out!');
+                            // })
+                            .pauseFor(400)
+                            .deleteAll(20)
+                            .typeString('<strong class="mx-auto" >Invest Track</strong>')
+                            // .callFunction(() => {
+                            //     console.log('All strings were deleted');
+                            // })
+                            .start();
+                    }}
+                    options={{
+                        delay: 30,
+                    }}
+                />
+            </div>
                 <div className="card card-login my-5">
                     <div className="card-body">
                         <h5 className="card-title text-center">{hasAccount ? 'Sign In' : 'Sign Up'}</h5>
