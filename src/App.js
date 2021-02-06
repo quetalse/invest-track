@@ -82,18 +82,18 @@ function App() {
     // }, [])
 
     return (
-        <Fragment>
+        <div className="application">
                 <BrowserRouter>
                     <Navbar/>
-                    <div className="container pt-4">
-                        <AppAlert/>
-                        <Switch>
-                            <Route path={'/login'} component={Login}/>
-                            <ProtectedRoute path={'/'} exact component={Home}/>
-                            <ProtectedRoute path={'/overview'} exact component={About}/>
-                            <Route component={NotFound} />
-                        </Switch>
-                    </div>
+                    {/*<div className="container pt-4">*/}
+                    <AppAlert/>
+                    <Switch>
+                        <Route path={'/login'} component={Login}/>
+                        <ProtectedRoute path={'/'} exact component={Home}/>
+                        <ProtectedRoute path={'/overview'} exact component={About}/>
+                        <Route component={NotFound} />
+                    </Switch>
+                    {/*</div>*/}
                 </BrowserRouter>
                 {/*<Login*/}
                 {/*    email={email}*/}
@@ -107,7 +107,7 @@ function App() {
                 {/*    emailError={emailError}*/}
                 {/*    passwordError={passwordError}*/}
                 {/*/>*/}
-        </Fragment>
+        </div>
     );
 }
 

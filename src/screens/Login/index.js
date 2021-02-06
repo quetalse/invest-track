@@ -60,29 +60,14 @@ export const Login = (props) => {
     }
 
     return(
-        <div className="col-sm-9 col-md-7 col-lg-6 mx-auto">
-            <div className="login-logo my-3">
+        <div className="login-page">
+            <div className="login-page__logo app-logo">
                 <Typewriter
-                    // options={{
-                    //     // wrapperClassName: 'login-logo my-3',
-                    //     strings: ['Hello', 'it\'s Invest Track'],
-                    //     autoStart: true,
-                    //     delay: 30,
-                    //     deleteSpeed: 30,
-                    //     // onCreateTextNode: () => {return '<p>Invest Track</p>p>'}
-                    //     // loop: true,
-                    // }}
                     onInit={(typewriter) => {
                         typewriter.typeString('<strong style="font-size: 3.9rem; text-align: left">Hello! it\'s </strong>')
-                            // .callFunction(() => {
-                            //     console.log('String typed out!');
-                            // })
                             .pauseFor(400)
                             .deleteAll(20)
                             .typeString('<strong class="mx-auto" >Invest Track</strong>')
-                            // .callFunction(() => {
-                            //     console.log('All strings were deleted');
-                            // })
                             .start();
                     }}
                     options={{
@@ -90,58 +75,60 @@ export const Login = (props) => {
                     }}
                 />
             </div>
-                <div className="card card-login my-5">
-                    <div className="card-body">
-                        <h5 className="card-title text-center">{hasAccount ? 'Sign In' : 'Sign Up'}</h5>
-                        <div className="form-login">
-                            <div className="form-label-group">
-                                <input
-                                    type="email"
-                                    id="inputEmail"
-                                    className={`form-control ${emailError && 'error'}`}
-                                    placeholder="Email address"
-                                    required
-                                    autoFocus
-                                    value={email}
-                                    onChange={e => dispatch(setEmail(e.target.value))}
-                                />
-                                <label htmlFor="inputEmail">Email address</label>
-                                <p className="error-message">{emailError}</p>
-                            </div>
-                            <div className="form-label-group">
-                                <input
-                                    type="password"
-                                    id="inputPassword"
-                                    className={`form-control ${passwordError && 'error'}`}
-                                    placeholder="Password"
-                                    required
-                                    value={password}
-                                    onChange={e => dispatch(setPassword(e.target.value))}
-                                />
-                                <label htmlFor="inputPassword">Password</label>
-                                <p className="error-message">{passwordError}</p>
-                            </div>
-                            {/*<div className="btnContainer">*/}
-                                <button
-                                    className="btn btn-lg btn-activity btn-block text-uppercase"
-                                    onClick={hasAccount ?
-                                        () => dispatch(signIn({email, password})) :
-                                        () => dispatch(signUp({email, password}))
-                                    }
-                                >
-                                    {hasAccount ? 'Sign in' : 'Sign up'}
-                                </button>
-                            {/*</div>*/}
-                            <div className="form-login-reverse mt-1">
-                                {hasAccount ? 'Don\'t have an account?' : 'Have an account?'}
-                                <label
-                                    className="float-right"
-                                    onClick={() => dispatch(setAccount(!hasAccount))}
-                                >
-                                    {hasAccount ? 'Sing up' : 'Sign in'}
-                                </label>
-                            </div>
+                <div className="login-page__form app-form">
+                    <div className="app-form__header">{hasAccount ? 'Sign In' : 'Sign Up'}</div>
+                    <div className="app-form__body">
+                        <div className="app-form__input app-input">
+                            <input
+                                type="email"
+                                id="inputEmail"
+                                className={`app-input__input ${emailError && 'app-input__input_error'}`}
+                                placeholder="Email address"
+                                required
+                                autoFocus
+                                value={email}
+                                onChange={e => dispatch(setEmail(e.target.value))}
+                            />
+                            <label
+                                className="app-input__label"
+                                htmlFor="inputEmail"
+                            >Email address</label>
+                            <p className="app-input__error-message">{emailError}</p>
                         </div>
+                        <div className="app-form__input app-input">
+                            <input
+                                type="password"
+                                id="inputPassword"
+                                className={`app-input__input ${passwordError && 'error'}`}
+                                placeholder="Password"
+                                required
+                                value={password}
+                                onChange={e => dispatch(setPassword(e.target.value))}
+                            />
+                            <label
+                                className="app-input__label"
+                                htmlFor="inputPassword"
+                            >Password</label>
+                            <p className="app-input__error-message">{passwordError}</p>
+                        </div>
+                        <button
+                            className="app-button"
+                            onClick={hasAccount ?
+                                () => dispatch(signIn({email, password})) :
+                                () => dispatch(signUp({email, password}))
+                            }
+                        >
+                            {hasAccount ? 'Sign in' : 'Sign up'}
+                        </button>
+                    </div>
+                    <div className="app-form__footer ">
+                        {hasAccount ? 'Don\'t have an account?' : 'Have an account?'}
+                        <label
+                            className="app-form__footer-btn"
+                            onClick={() => dispatch(setAccount(!hasAccount))}
+                        >
+                            {hasAccount ? 'Sing up' : 'Sign in'}
+                        </label>
                     </div>
                 </div>
             </div>
