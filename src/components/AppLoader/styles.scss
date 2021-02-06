@@ -1,0 +1,10 @@
+@import "~bootstrap/scss/bootstrap";
+
+.app-loader{
+  @extend .spinner-grow;
+
+  &-sm{
+    width: 1rem;
+    height: 1rem;
+  }
+}

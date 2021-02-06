@@ -1,20 +1,24 @@
-// import {Card} from "react-bootstrap";
-// export { Form, Button, Card } from 'react-bootstrap';
-import {auth} from "../../firebase";
 import {useEffect} from "react";
-import Typewriter from 'typewriter-effect';
-
-import { setUser, signIn, signUp, setEmail, setPassword, setAccount, clearInputs } from "../../store/actions/auth";
 import {useDispatch, useSelector} from "react-redux";
+import {Redirect, useHistory} from "react-router-dom";
+
+/** COMPONENTS**/
+import Typewriter from 'typewriter-effect';
+import { auth } from "../../firebase";
+import { AppLoader } from "../../components/AppLoader";
+
+/** ACTIONS **/
+import { setLoading, setUser, signIn, signUp, setEmail, setPassword, setAccount, clearInputs } from "../../store/actions/auth";
+
 
 import './styles.scss';
-import {Redirect, useHistory} from "react-router-dom";
+
 
 export const Login = (props) => {
 
     const history = useHistory();
     const dispatch = useDispatch();
-    const {user, email, password, emailError, passwordError, hasAccount} = useSelector(state => {
+    const {loading, user, email, password, emailError, passwordError, hasAccount} = useSelector(state => {
         const auth = state.auth;
 
         return {
@@ -23,7 +27,8 @@ export const Login = (props) => {
             password: auth.password,
             emailError: auth.emailError,
             passwordError: auth.passwordError,
-            hasAccount: auth.hasAccount
+            hasAccount: auth.hasAccount,
+            loading: auth.loading
         }
     })
 
@@ -43,6 +48,7 @@ export const Login = (props) => {
             }else{
                 dispatch(setUser(''));
             }
+            dispatch(setLoading(false))
         })
     }
 
@@ -75,7 +81,8 @@ export const Login = (props) => {
                     }}
                 />
             </div>
-                <div className="login-page__form app-form">
+
+            <div className="login-page__form app-form">
                     <div className="app-form__header">{hasAccount ? 'Sign In' : 'Sign Up'}</div>
                     <div className="app-form__body">
                         <div className="app-form__input app-input">
@@ -114,11 +121,12 @@ export const Login = (props) => {
                         <button
                             className="app-button"
                             onClick={hasAccount ?
-                                () => dispatch(signIn({email, password})) :
+                                () => { dispatch(signIn({email, password}))} :
                                 () => dispatch(signUp({email, password}))
                             }
                         >
                             {hasAccount ? 'Sign in' : 'Sign up'}
+                            {loading && <AppLoader/>}
                         </button>
                     </div>
                     <div className="app-form__footer ">
@@ -131,6 +139,6 @@ export const Login = (props) => {
                         </label>
                     </div>
                 </div>
-            </div>
+        </div>
     )
 }

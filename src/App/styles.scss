@@ -1,18 +1,5 @@
 @import "~bootstrap/scss/bootstrap";
-
-:root {
-  --input-padding-x: 1.5rem;
-  --input-padding-y: .75rem;
-
-  --color-dark: #202a33;
-  --color-light-dark: #364655;
-  --color-white: #ffffff;
-  --color-error: #ff6699;
-  --color-activity: #ef8b2e;
-
-  --main-border-radius: 1rem
-
-}
+@import "src/constants";
 
 
 body {
@@ -36,7 +23,7 @@ body {
     //background-image: url(https://giffiles.alphacoders.com/208/208725.gif);
     //background-image: url(https://media2.giphy.com/media/3o7TKrZs4qBmcPBzos/giphy-downsized.gif);
     //background-image: url(https://cdn.dribbble.com/users/39141/screenshots/4370017/01_copy_195.gif);
-    background-image: url('./assets/images/logo-animation.gif');
+    background-image: url('../assets/images/logo-animation.gif');
     background-size: cover;
     color: transparent;
     -webkit-background-clip: text;
@@ -183,6 +170,7 @@ body {
     font-weight: bold;
     padding: 1rem;
     transition: all 0.2s;
+    outline-style: none;
 
     color: #fff;
     background-color: var(--color-activity);
@@ -220,14 +208,13 @@ body {
       @include make-col(6);
     }
     @include media-breakpoint-up(lg) {
-      @include make-col(6);
+      @include make-col(4);
     }
 
     display: flex;
     flex-direction: column;
     height: 100%;
     min-height: 100%;
-    margin-top: 3rem;
 
     &__logo{
       margin-top: 1rem;
@@ -237,53 +224,6 @@ body {
     &__form{
       @extend .my-5;
     }
-  }
-}
-
-.form-login-reverse label{
-  color: var(--color-activity);
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-.form-login-reverse{
-  cursor: default;
-}
-
-///* Fallback for Edge
-//-------------------------------------------------- */
-//
-//@supports (-ms-ime-align: auto) {
-//  .form-label-group>label {
-//    display: none;
-//  }
-//  .form-label-group input::-ms-input-placeholder {
-//    color: #777;
-//  }
-//}
-//
-///* Fallback for IE
-//-------------------------------------------------- */
-//
-//@media all and (-ms-high-contrast: none),
-//(-ms-high-contrast: active) {
-//  .app-input>label {
-//    display: none;
-//  }
-//  .form-label-group input:-ms-input-placeholder {
-//    color: #777;
-//  }
-//}
-
-
-
-.stock {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  strong{
-    margin-right: 1rem;
   }
 }
 
@@ -299,28 +239,4 @@ body {
 .alert-exit-active{
   transition: opacity 350ms ease-out;
   opacity: 0;
-}
-
-.stock-exit-active{
-  animation: stock 800ms ease-out forwards;
-}
-
-.stock-enter-active{
-  animation: stock 800ms ease-in alternate-reverse;
-}
-
-@keyframes stock {
-  0%{
-    transform: translateX(0);
-  }
-
-  30%{
-    opacity: .7;
-    transform: translateX(30px);
-  }
-
-  100%{
-    opacity: 0;
-    transform: translateX(-200px);
-  }
 }

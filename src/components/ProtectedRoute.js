@@ -3,9 +3,10 @@ import {useSelector} from "react-redux";
 
 export const ProtectedRoute = ({component: Component, ...rest }) => {
 
-    const user = useSelector(state => state.auth.user)
-
+    let user = useSelector(state => state.auth.user)
     console.log('user', user)
+
+    // user = true
 
     return <Route {...rest} render={(props) => (
         user

@@ -1,4 +1,5 @@
 import {
+    SET_LOADING,
     SET_USER,
     SET_EMAIL,
     SET_PASSWORD,
@@ -66,6 +67,11 @@ export const remove = id => async dispatch => {
     })
 }
 
+export const setLoading = (status) => ({
+    type: SET_LOADING,
+    payload: status
+})
+
 export const setAccount = (account) => ({
     type: SET_ACCOUNT,
     payload: account
@@ -108,6 +114,7 @@ const passwordError = (msg) => ({
 
 export const signIn = ({email, password}) => dispatch => {
     dispatch(clearErrors());
+    dispatch(setLoading(true));
     auth.signInWithEmailAndPassword(email, password)
         .catch(error => {
             switch (error.code) {
@@ -121,17 +128,19 @@ export const signIn = ({email, password}) => dispatch => {
                     break;
                 default:
             }
+            dispatch(setLoading(false))
         })
+
 }
 
 export const signUp = ({email, password}) => dispatch => {
     dispatch(clearErrors());
+    dispatch(setLoading());
+    dispatch(setLoading(true))
     auth.createUserWithEmailAndPassword(email, password)
         .catch(error => {
             console.log(error.code)
             switch (error.code) {
-
-
                 case "auth/email-already-in-use":
                 case "auth/invalid-email":
                     dispatch(emailError(error.message));
@@ -141,6 +150,7 @@ export const signUp = ({email, password}) => dispatch => {
                     break;
                 default:
             }
+            dispatch(setLoading(false))
         })
 }
 

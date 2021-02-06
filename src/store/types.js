@@ -6,6 +6,7 @@ export const ADD_STOCK = "ADD_STOCK";
 export const GET_STOCKS = "GET_STOCKS";
 export const REMOVE_STOCK = "REMOVE_STOCK";
 
+export const SET_LOADING = "SET_LOADING";
 export const CLEAR_INPUTS = "CLEAR_INPUTS";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const EMAIL_ERROR = "EMAIL_ERROR";

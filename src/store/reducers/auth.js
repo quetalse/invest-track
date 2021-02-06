@@ -1,6 +1,7 @@
-import {SET_USER, SET_EMAIL, SET_PASSWORD, CLEAR_INPUTS, CLEAR_ERRORS, EMAIL_ERROR, PASSWORD_ERROR, SET_ACCOUNT} from "../types";
+import {SET_LOADING, SET_USER, SET_EMAIL, SET_PASSWORD, CLEAR_INPUTS, CLEAR_ERRORS, EMAIL_ERROR, PASSWORD_ERROR, SET_ACCOUNT} from "../types";
 
 const handlers = {
+    [SET_LOADING]: (state, {payload}) => ({...state, loading: payload}),
     [SET_ACCOUNT]: (state, {payload}) => ({...state, hasAccount: payload}),
     [SET_EMAIL]: (state, {payload}) => ({...state, email: payload}),
     [SET_PASSWORD]: (state, {payload}) => ({...state, password: payload}),
@@ -13,6 +14,7 @@ const handlers = {
 };
 
 const initialState = {
+    loading: false,
     user: '',
     email: '',
     password: '',
