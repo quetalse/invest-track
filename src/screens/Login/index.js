@@ -39,22 +39,22 @@ export const Login = (props) => {
     // console.log('hasAccount',hasAccount)
 
 
-    const authListener = () => {
-        auth.onAuthStateChanged(user => {
-            if(user){
-                // console.log('user', user)
-                dispatch(clearInputs());
-                dispatch(setUser(user));
-            }else{
-                dispatch(setUser(''));
-            }
-            dispatch(setLoading(false))
-        })
-    }
-
-    useEffect(() => {
-        authListener()
-    }, [])
+    // const authListener = () => {
+    //     auth.onAuthStateChanged(user => {
+    //         if(user){
+    //             // console.log('user', user)
+    //             dispatch(clearInputs());
+    //             dispatch(setUser(user));
+    //         }else{
+    //             dispatch(setUser(''));
+    //         }
+    //         dispatch(setLoading(false))
+    //     })
+    // }
+    //
+    // useEffect(() => {
+    //     authListener()
+    // }, [])
 
 
     console.log('history', history)
@@ -126,7 +126,7 @@ export const Login = (props) => {
                             }
                         >
                             {hasAccount ? 'Sign in' : 'Sign up'}
-                            {loading && <AppLoader/>}
+                            {loading && <AppLoader className="app-loader-sm" />}
                         </button>
                     </div>
                     <div className="app-form__footer ">

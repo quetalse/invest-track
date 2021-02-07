@@ -2,7 +2,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { CSSTransition } from "react-transition-group";
 
 /** ACTIONS **/
-import { hide } from "../store/actions/alert";
+import { hide } from "../../store/actions/alert";
+
+import "./styles.scss";
 
 export const AppAlert = () => {
 

@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { show } from "../store/actions/alert";
 import { add } from "../store/actions/stocks";
 
-export const AppForm = () => {
+export const AppForm = ({className}) => {
 
     const dispatch = useDispatch();
     const [value, setValue] = useState('');
@@ -31,7 +31,9 @@ export const AppForm = () => {
     }
 
     return (
-        <form onSubmit={submitHandler}>
+        <form
+            className={`${className}`}
+            onSubmit={submitHandler}>
             <div className="form-group">
                 <input
                     type="text"

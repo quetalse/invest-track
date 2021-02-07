@@ -1,7 +1,11 @@
-@import "~bootstrap/scss/bootstrap";
+@import "../../styles";
 
 .app-loader{
   @extend .spinner-grow;
+
+  &-light{
+    @extend .text-light;
+  }
 
   &-sm{
     width: 1rem;

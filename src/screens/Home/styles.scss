@@ -1,0 +1,11 @@
+@import "../../styles";
+
+.home{
+
+  &__list{
+    display: flex;
+    min-height: 120px;
+    justify-content: center;
+    align-items: center;
+  }
+}

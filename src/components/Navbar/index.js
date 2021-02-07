@@ -40,13 +40,21 @@ export const Navbar = () => {
                     > Summary
                     </NavLink>
                 </li>}
+                {user && <li className="app-navbar__item">
+                    <NavLink
+                        className="app-navbar__button"
+                        activeClassName="app-navbar__button-active"
+                        to="/news"
+                    > News
+                    </NavLink>
+                </li>}
                 {user && <li className="app-navbar__item app-navbar__item-right">
-                        <span
-                            className="app-navbar__button"
-                            onClick={logOut}
-                        >
-                            Logout
-                        </span>
+                    <span
+                        className="app-navbar__button"
+                        onClick={logOut}
+                    >
+                        Logout
+                    </span>
                     </li>}
             </ul>
         </nav>
