@@ -12,30 +12,50 @@ import { getAll, remove } from "../../store/actions/stocks";
 
 import "./styles.scss";
 
-import portfel from "../../assets/images/portfel.png";
+import portfolio from "../../assets/images/portfolio.png";
+// assets
+const AppPortfolioCard = ({title}) => {
 
-const AppPortfelCard = ({title}) => {
-
-    const addNewPortfel = () => {
+    const addNewPortfolio = () => {
         let currentUserId  = auth.currentUser.uid;
 
-       let some = database.ref('users/' + currentUserId).set({
-           username: 'hi',
-           email: '1111',
-           profile_picture : "1122"
-       });
+       // let some = database.ref('users/' + currentUserId).set({
+       //     username: 'hi',
+       //     email: '1111',
+       //     profile_picture : "1122"
+       // });
 
-       console.log('some', some)
+        let ref = database.ref('portfolios/');
+        ref.set('Hello')
+            .then(function() {
+                return ref.once("value");
+            })
+            .then((snapshot) => {
+                console.log('val', snapshot.val())
+            })
+        // ref.once("value")
+        //     .then(function(snapshot) {
+        //         // snapshot.forEach(function (childSnapshot) {
+        //         //     let key = childSnapshot.key; // "ada"
+        //         //     console.log('key', key)
+        //         //     console.log('key', childSnapshot.val())
+        //         //     // var key = snapshot.key; // "ada"
+        //         //     // var childKey = snapshot.child("name/last").key; // "last"
+        //         // });
+        //
+        //         console.log('key', snapshot.hasChildren())
+        //     })
+
 
     }
 
     return (
         <div>
-            <img width="220" src={portfel} alt="portfel"/>
+            <img width="220" src={portfolio} alt="portfolio"/>
             <p>{ title ||
                 (
                     <button
-                        onClick={addNewPortfel}
+                        onClick={addNewPortfolio}
                     > Добавить новый портфель</button>
                 )
             }</p>
@@ -47,7 +67,7 @@ export const Home = () => {
 
     const dispatch = useDispatch();
     const {data, loading} = useSelector(state => state.stocks);
-    const [portfelArray, setPortfelArray] = useState([])
+    const [portfolios, setPortfolios] = useState([])
 
     const getAllStocks = () => dispatch(getAll());
     const removeStock = id => dispatch(remove(id));
@@ -65,14 +85,14 @@ export const Home = () => {
         </div>
     )
 
-    const PortfelList = () => {
-        if(portfelArray.length){
+    const PortfoliosList = () => {
+        if(portfolios.length){
 
         }else{
             return (
-                <div className="home__portfel-list">
+                <div className="home__portfolio-list">
                     Портфелей нет, добавить новый
-                    <AppPortfelCard/>
+                    <AppPortfolioCard/>
                 </div>
             )
         }
@@ -80,10 +100,10 @@ export const Home = () => {
 
     return (
         <section className="home">
-            <h1 className="home__title">Add new item (ETFs, stocks, bonds, etc). to portfel</h1>
+            <h1 className="home__title">Add new item (ETFs, stocks, bonds, etc). to portfolio</h1>
             <AppForm className="home__form"/>
             <StockList/>
-            <PortfelList/>
+            <PortfoliosList/>
         </section>
     )
 }
