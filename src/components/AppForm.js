@@ -1,17 +1,17 @@
-import { useState, useContext } from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import { useState } from 'react';
+import { useDispatch } from "react-redux";
 
 import { show } from "../store/actions/alert";
 import { add } from "../store/actions/stocks";
 
-export const AppForm = () => {
+export const AppForm = ({className}) => {
 
     const dispatch = useDispatch();
     const [value, setValue] = useState('');
     // const {data, loading} = useSelector(state => state.stock);
 
-    const showAlert = (text, status) => show(dispatch)(text, status);
-    const addStock = title => add(dispatch)(title);
+    const showAlert = (text, status) => dispatch(show(text, status));
+    const addStock = title => dispatch(add(title));
 
     const submitHandler = event => {
         event.preventDefault();
@@ -31,7 +31,9 @@ export const AppForm = () => {
     }
 
     return (
-        <form onSubmit={submitHandler}>
+        <form
+            className={`${className}`}
+            onSubmit={submitHandler}>
             <div className="form-group">
                 <input
                     type="text"

@@ -1,6 +1,6 @@
 // import { Fragment } from 'react';
 
-export const About = () => {
+export const News = () => {
     return (
         <div className="jumbotron jumbotron-fluid">
             <div className="container">

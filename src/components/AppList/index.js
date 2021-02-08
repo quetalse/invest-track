@@ -1,22 +1,24 @@
 import { TransitionGroup, CSSTransition } from "react-transition-group";
+import "./styles.scss";
 
-export const AppList = ({stocks, onRemove}) => {
+
+export const AppList = ({listData, onRemove}) => {
     return (
-        <TransitionGroup component="ul" className="list-group">
-                {stocks.map( stock => (
+        <TransitionGroup component="ul" className="app-list">
+                {listData.map( stock => (
                     <CSSTransition
                         key={`${stock.id}`}
-                        classNames={'stock'}
+                        classNames={'app-list__item'}
                         timeout={800}
                     >
-                        <li className="list-group-item stock">
+                        <li className="app-list__item">
                             <div>
-                                <strong>{stock.title}</strong>
+                                <strong className="app-list__title">{stock.title}</strong>
                                 <small>{stock.date}</small>
                             </div>
                             <button
                                 type="button"
-                                className="btn btn-outline-danger btn-sm"
+                                className="app-list__button"
                                 onClick={() => onRemove(stock.id)}
                             >&times;
                             </button>

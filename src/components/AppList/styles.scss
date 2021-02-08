@@ -1,0 +1,48 @@
+@import "../../styles";
+
+.app-list{
+  @extend .list-group;
+  width: 100%;
+
+  &__item{
+
+    @extend .list-group-item;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &-exit-active{
+      animation: app-list-item 800ms ease-out forwards;
+    }
+
+    &-enter-active{
+      animation: app-list-item 800ms ease-in alternate-reverse;
+    }
+
+  }
+
+  &__title{
+    margin-right: 1rem;
+  }
+
+  &__button{
+    @extend .btn, .btn-outline-danger, .btn-sm
+  }
+}
+
+
+@keyframes app-list-item {
+  0%{
+    transform: translateX(0);
+  }
+
+  30%{
+    opacity: .7;
+    transform: translateX(30px);
+  }
+
+  100%{
+    opacity: 0;
+    transform: translateX(-200px);
+  }
+}

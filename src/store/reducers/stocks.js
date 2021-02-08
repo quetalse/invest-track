@@ -1,8 +1,8 @@
-import {ADD_STOCK, FETCH_STOCKS, REMOVE_STOCK, SHOW_LOADER} from "../types";
+import {ADD_STOCK, GET_STOCKS, REMOVE_STOCK, SHOW_LOADER} from "../types";
 
 const handlers = {
     [REMOVE_STOCK]: (state, {payload}) => ({...state, data: state.data.filter(stock => stock.id !== payload)}),
-    [FETCH_STOCKS]: (state, {payload}) => ({...state, data: payload, loading: false}),
+    [GET_STOCKS]: (state, {payload}) => ({...state, data: payload, loading: false}),
     [ADD_STOCK]: (state, {payload}) => ({...state, data: [...state.data, payload]}),
     [SHOW_LOADER]: (state) => ({...state, loading: true}),
     DEFAULT: state => state

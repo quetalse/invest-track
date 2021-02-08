@@ -1,24 +1,27 @@
-import {ADD_STOCK, FETCH_STOCKS, REMOVE_STOCK, SHOW_LOADER} from "../types";
+import {ADD_STOCK, GET_STOCKS, REMOVE_STOCK, SHOW_LOADER} from "../types";
 import { getRequest, postRequest, deleteRequest} from "../api";
 
-const url = process.env.REACT_APP_DB_URL;
+const url = process.env.REACT_APP_FIREBASE_DATABASE_URL;
 
-export const showLoader = dispatch => dispatch({type: SHOW_LOADER});
+export const showLoader = () => ({type: SHOW_LOADER});
 
-export const getAll = dispatch => async () => {
-    showLoader(dispatch);
+export const getAll = () => async dispatch => {
+
+    dispatch(showLoader());
+
     const data = await getRequest(`${url}/stocks.json`);
+
     const payload = Object.keys(data).map(key => ({
         ...data[key],
         id: key
     }))
 
     dispatch({
-        type: FETCH_STOCKS,
+        type: GET_STOCKS,
         payload
     })
 };
-export const add = dispatch => async title => {
+export const add = title => async dispatch => {
     const stock = {
         title, date: new Date().toJSON()
     }
@@ -42,7 +45,7 @@ export const add = dispatch => async title => {
         throw new Error(e.message)
     }
 };
-export const remove = dispatch => async id => {
+export const remove = id => async dispatch => {
     await deleteRequest(`${url}/stocks/${id}.json`);
     dispatch({
         type: REMOVE_STOCK,
