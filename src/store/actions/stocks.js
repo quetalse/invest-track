@@ -1,7 +1,7 @@
 import {ADD_STOCK, GET_STOCKS, REMOVE_STOCK, SHOW_LOADER} from "../types";
 import { getRequest, postRequest, deleteRequest} from "../api";
 
-const url = process.env.REACT_APP_DB_URL;
+const url = process.env.REACT_APP_FIREBASE_DATABASE_URL;
 
 export const showLoader = () => ({type: SHOW_LOADER});
 

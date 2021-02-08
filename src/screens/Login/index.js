@@ -57,11 +57,10 @@ export const Login = (props) => {
     // }, [])
 
 
-    console.log('history', history)
+    console.log('user', user)
 
     if(user) {
         const { from } = history.location.state || { from: { pathname: '/' } }
-
         return <Redirect to={from} />
     }
 

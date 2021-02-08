@@ -1,5 +1,6 @@
 import {Fragment, useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
+import { auth, database } from "../../firebase";
 
 /** APP COMPONENTS**/
 import { AppForm } from "../../components/AppForm";
@@ -14,10 +15,30 @@ import "./styles.scss";
 import portfel from "../../assets/images/portfel.png";
 
 const AppPortfelCard = ({title}) => {
+
+    const addNewPortfel = () => {
+        let currentUserId  = auth.currentUser.uid;
+
+       let some = database.ref('users/' + currentUserId).set({
+           username: 'hi',
+           email: '1111',
+           profile_picture : "1122"
+       });
+
+       console.log('some', some)
+
+    }
+
     return (
         <div>
             <img width="220" src={portfel} alt="portfel"/>
-            <p>{ title || <button > Добавить новый портфель</button> }</p>
+            <p>{ title ||
+                (
+                    <button
+                        onClick={addNewPortfel}
+                    > Добавить новый портфель</button>
+                )
+            }</p>
         </div>
     )
 }
