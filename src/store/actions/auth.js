@@ -13,7 +13,7 @@ import {
     SET_ACCOUNT
 } from "../types";
 import { getRequest, postRequest, deleteRequest} from "../api";
-import {auth} from "../../firebase";
+import {auth, database} from "../../firebase";
 
 const url = process.env.REACT_APP_DB_URL;
 
@@ -138,6 +138,22 @@ export const signUp = ({email, password}) => dispatch => {
     dispatch(setLoading());
     dispatch(setLoading(true))
     auth.createUserWithEmailAndPassword(email, password)
+        // .then((userCredential) => {
+        //     // let ref = database.ref('profiles');
+        //     // console.log( ref.key)
+        //     // ref.once('value')
+        //     //     .then((snapshot) => {
+        //     //        console.log(snapshot.key)
+        //     //        console.log(snapshot.exists())
+        //     //     });
+        //
+        //     database.ref('profiles/' + userCredential.user.uid)
+        //         .set({
+        //             username: userCredential.user.email,
+        //             portfolios: `${[]}`
+        //         })
+        //
+        // })
         .catch(error => {
             console.log(error.code)
             switch (error.code) {

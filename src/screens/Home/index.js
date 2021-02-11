@@ -9,6 +9,7 @@ import { AppLoader } from "../../components/AppLoader";
 
 /** ACTIONS **/
 import { getAll, remove } from "../../store/actions/stocks";
+import { addPortfolio } from "../../store/actions/portfolios";
 
 import "./styles.scss";
 
@@ -16,23 +17,26 @@ import portfolio from "../../assets/images/portfolio.png";
 // assets
 const AppPortfolioCard = ({title}) => {
 
-    const addNewPortfolio = () => {
-        let currentUserId  = auth.currentUser.uid;
+    const dispatch = useDispatch();
 
+    const addNewPortfolio = () => {
+        let uid  = auth.currentUser.uid;
+
+        dispatch(addPortfolio({uid, portfolio: {title: "Yaroslav"}}));
        // let some = database.ref('users/' + currentUserId).set({
        //     username: 'hi',
        //     email: '1111',
        //     profile_picture : "1122"
        // });
 
-        let ref = database.ref('portfolios/');
-        ref.set('Hello')
-            .then(function() {
-                return ref.once("value");
-            })
-            .then((snapshot) => {
-                console.log('val', snapshot.val())
-            })
+        // let ref = database.ref('portfolios/');
+        // ref.set('Hello')
+        //     .then(function() {
+        //         return ref.once("value");
+        //     })
+        //     .then((snapshot) => {
+        //         console.log('val', snapshot.val())
+        //     })
         // ref.once("value")
         //     .then(function(snapshot) {
         //         // snapshot.forEach(function (childSnapshot) {
@@ -77,7 +81,15 @@ export const Home = () => {
         // eslint-disable-next-line
     }, []);
 
-
+    useEffect(() => {
+        const uid = auth.currentUser.uid;
+        const portfoliosRef = database.ref('profiles/' + uid + '/portfolios');
+        portfoliosRef.on('value', snapshot => {
+            const portfolios = snapshot.exists();
+            console.log('port', portfolios);
+            console.log('val', snapshot.val());
+        })
+    }, []);
 
     const StockList = () => (
         <div className="home__list">
