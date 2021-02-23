@@ -16,5 +16,7 @@ const initialState = {
 export const portfolios = (state = initialState, action) => {
     const handle = handlers[action.type] || handlers.DEFAULT;
 
+    console.log('state, action', state, action)
+
     return handle(state, action);
 }

@@ -76,11 +76,10 @@ export const Login = (props) => {
                             .start();
                     }}
                     options={{
-                        delay: 30,
+                        delay: 30
                     }}
                 />
             </div>
-
             <div className="login-page__form app-form">
                     <div className="app-form__header">{hasAccount ? 'Sign In' : 'Sign Up'}</div>
                     <div className="app-form__body">

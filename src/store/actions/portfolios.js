@@ -2,18 +2,36 @@ import { ADD_PORTFOLIO, REMOVE_PORTFOLIO, GET_PORTFOLIOS, LOADING_PORTFOLIOS } f
 import { getRequest, postRequest, deleteRequest} from "../api";
 import {auth, database} from "../../firebase";
 
-const url = process.env.REACT_APP_DB_URL;
-
 export const setPortfoliosLoading = () => ({
     type: LOADING_PORTFOLIOS
 });
 
-export const getPortfolios = () => {}
+export const getPortfolios = () => dispatch => {
+    const uid = auth.currentUser.uid;
+    const portfoliosRef = database.ref('profiles/' + uid + '/portfolios');
+
+    dispatch(setPortfoliosLoading());
+
+    portfoliosRef.on('value', snapshot => {
+        const portfolios = snapshot.val();
+        const payload = Object.keys(portfolios).map((id) => ({
+          id,
+          title: portfolios[id].title
+        }))
+
+        dispatch({
+            type: ADD_PORTFOLIO,
+            payload
+        })
+    })
+}
 
 export const addPortfolio = ({uid, portfolio}) => dispatch => {
     const portfoliosRef = database.ref('profiles/' + uid + '/portfolios');
     portfoliosRef.push(portfolio);
 }
+
+
 
 // export const showLoader = () => ({type: SHOW_LOADER});
 //
