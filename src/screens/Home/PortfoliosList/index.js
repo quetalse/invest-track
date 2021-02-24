@@ -1,14 +1,15 @@
 import {Fragment, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { auth, database } from "../../firebase";
+import { auth, database } from "../../../firebase";
 
 /** APP COMPONENTS**/
-import { AppLoader } from "../../components/AppLoader";
+import { AppLoader } from "../../../components/AppLoader";
 
 /** ACTIONS **/
-import { getPortfolios, addPortfolio } from "../../store/actions/portfolios";
-import portfolio from "../../assets/images/portfolio.png";
+import { getPortfolios, addPortfolio } from "../../../store/actions/portfolios";
+import portfolio from "../../../assets/images/portfolio.png";
 
+import "./styles.scss";
 
 const PortfolioCard = ({title}) => {
 
@@ -102,9 +103,27 @@ export const PortfoliosList = () => {
     }
 
     return (
-        <Fragment>
-            {loading && <AppLoader/>}
-            {data && renderPortfolios()}
-        </Fragment>
+        // <Fragment>
+        //     {loading && <AppLoader/>}
+        //     {data && renderPortfolios()}
+        // </Fragment>
+
+        <div className="portfolios-list">
+            <div className="portfolios-list__header">
+                Список портфелей
+            </div>
+            <div className="portfolios-list__body card-body">
+                <div className="portfolio-card">
+                    <img src={portfolio} alt="portfolio" className="portfolio-card__pic"/>
+                    <p className="portfolio-card__pic">Портфель №1</p>
+                </div>
+                <h5 className="card-title">Специальный заголовок</h5>
+                <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" className="btn btn-primary">Переход куда-нибудь</a>
+            </div>
+            <div className="card-footer text-muted">
+                2 days ago
+            </div>
+        </div>
     )
 }

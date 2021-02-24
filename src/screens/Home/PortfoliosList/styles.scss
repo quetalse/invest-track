@@ -1,0 +1,23 @@
+//@import "../../styles";
+//
+//.home{
+//
+//  &__list{
+//    display: flex;
+//    min-height: 120px;
+//    justify-content: center;
+//    align-items: center;
+//  }
+//}
+
+@import "~bootstrap/scss/bootstrap";
+
+.portfolios-list{
+  @extend .card;
+
+  text-align: center;
+
+  &__header{
+    @extend .card-header
+  }
+}

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { auth, database } from "../../firebase";
 
 /** COMPONENTS **/
-import { PortfoliosList } from "./PortfoliosList";
+import { PortfoliosList } from "./PortfoliosList/index";
 
 /** APP COMPONENTS**/
 import { AppForm } from "../../components/AppForm";
@@ -38,9 +38,9 @@ export const Home = () => {
 
     return (
         <section className="home">
-            <h1 className="home__title">Add new item (ETFs, stocks, bonds, etc). to portfolio</h1>
-            <AppForm className="home__form"/>
-            <StockList/>
+            {/*<h1 className="home__title">Add new item (ETFs, stocks, bonds, etc). to portfolio</h1>*/}
+            {/*<AppForm className="home__form"/>*/}
+            {/*<StockList/>*/}
             <PortfoliosList/>
         </section>
     )
