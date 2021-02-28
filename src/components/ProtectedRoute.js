@@ -16,7 +16,6 @@ export const ProtectedRoute = ({component: Component, ...rest }) => {
     useEffect(() => {
         auth.onAuthStateChanged(user => {
 
-            console.log('user', user)
             if(user){
                 dispatch(clearInputs());
                 dispatch(setUser(user));
@@ -26,7 +25,7 @@ export const ProtectedRoute = ({component: Component, ...rest }) => {
             dispatch(setLoading(false));
             setLoadingAuth(false);
         })
-    }, [])
+    }, [dispatch])
 
     if(loadingAuth) return (
         <div className="login-page login-page-center">

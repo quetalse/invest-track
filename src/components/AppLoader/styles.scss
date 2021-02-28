@@ -3,12 +3,16 @@
 .app-loader{
   @extend .spinner-grow;
 
-  &-light{
+  &_light{
     @extend .text-light;
   }
 
-  &-sm{
+  &_sm{
     width: 1rem;
     height: 1rem;
+  }
+
+  &--center{
+    margin: 0 auto;
   }
 }

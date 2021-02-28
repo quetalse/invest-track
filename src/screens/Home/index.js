@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { auth, database } from "../../firebase";
 
 /** COMPONENTS **/
-import { PortfoliosList } from "./PortfoliosList/index";
+import { PortfoliosList } from "./PortfoliosList";
+import { PortfolioOverview } from "./PortfolioOverview";
 
 /** APP COMPONENTS**/
 import { AppForm } from "../../components/AppForm";
@@ -42,6 +43,7 @@ export const Home = () => {
             {/*<AppForm className="home__form"/>*/}
             {/*<StockList/>*/}
             <PortfoliosList/>
+            <PortfolioOverview/>
         </section>
     )
 }

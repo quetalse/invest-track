@@ -1,0 +1,39 @@
+@import "src/styles";
+
+.portfolio-card{
+  width: 160px;
+  //transition: all 0s linear 300ms, opacity 300ms;
+  transition: 0.15s all ease;
+
+  &__pic{
+    width: 100%;
+  }
+
+  &__title{
+    margin: 0;
+  }
+
+  &__actions{
+    display: flex;
+    justify-content: space-evenly;
+    //visibility: hidden;
+    //opacity: 0;
+  }
+
+  &__btn{
+    //margin: 0 .2rem;
+  }
+
+
+  &:hover{
+    transform: scale(1.02);
+
+    .portfolio-card__actions{
+    //  display: flex;
+    //  flex: 1;
+      opacity: 1;
+      visibility: visible;
+      //transition: visibility 0s linear 0s, opacity 300ms;
+    }
+  }
+}

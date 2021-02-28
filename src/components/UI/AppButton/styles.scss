@@ -1,0 +1,47 @@
+@import "src/styles";
+
+$border-radius: .4rem;
+
+.app-button{
+  //font-size: 80%;
+  border-radius: $border-radius;
+
+  padding: 0 0.5rem;
+  transition: background-color 0.2s ease;
+
+  outline-style: none;
+
+  color: var(--color-light-dark);
+  background-color: var(--color-activity);
+  border: 1px solid var(--color-activity);
+
+
+  &:hover{
+    color: #fff;
+    background-color: var(--color-light-dark);
+    border-color: var(--color-light-dark);
+    //transition: 0.15s all ease;
+  }
+
+  &_submit{
+    font-weight: bold;
+    letter-spacing: .1rem;
+    padding: 1rem;
+
+    @extend .text-uppercase;
+    @extend .btn-block;
+  }
+
+  &_block{
+    @extend .btn-block;
+  }
+
+  &_google{
+    color: white;
+    background-color: #ea4335;
+  }
+  &_facebook{
+    color: white;
+    background-color: #3b5998;
+  }
+}

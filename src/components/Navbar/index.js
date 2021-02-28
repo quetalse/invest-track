@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import { logOut } from "../../store/actions/auth";
 
 import "./styles.scss";

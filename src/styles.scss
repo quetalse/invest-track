@@ -1,5 +1,6 @@
 @import "~bootstrap/scss/bootstrap";
 @import "src/constants";
+@import "~font-awesome/scss/font-awesome";
 
 html{
   height: 100%;
@@ -165,39 +166,6 @@ html{
             font-weight: 800;
           }
         }
-        .app-button{
-
-          font-size: 80%;
-          border-radius: 1rem;
-          letter-spacing: .1rem;
-          font-weight: bold;
-          padding: 1rem;
-          transition: all 0.2s;
-          outline-style: none;
-
-          color: #fff;
-          background-color: var(--color-activity);
-          border: 1px solid var(--color-activity);
-
-          @extend .text-uppercase;
-          @extend .btn-block;
-
-          &:hover{
-            color: #fff;
-            background-color: var(--color-light-dark);
-            border-color: var(--color-light-dark);
-          }
-
-          &_google{
-            color: white;
-            background-color: #ea4335;
-          }
-          &_facebook{
-            color: white;
-            background-color: #3b5998;
-          }
-        }
-
 
         .app-navbar{
 
@@ -301,5 +269,38 @@ html{
 
       }
     }
+
+    //.app-button{
+    //
+    //  font-size: 80%;
+    //  border-radius: 1rem;
+    //  letter-spacing: .1rem;
+    //  font-weight: bold;
+    //  padding: 1rem;
+    //  transition: all 0.2s;
+    //  outline-style: none;
+    //
+    //  color: #fff;
+    //  background-color: var(--color-activity);
+    //  border: 1px solid var(--color-activity);
+    //
+    //  @extend .text-uppercase;
+    //  @extend .btn-block;
+    //
+    //  &:hover{
+    //    color: #fff;
+    //    background-color: var(--color-light-dark);
+    //    border-color: var(--color-light-dark);
+    //  }
+    //
+    //  &_google{
+    //    color: white;
+    //    background-color: #ea4335;
+    //  }
+    //  &_facebook{
+    //    color: white;
+    //    background-color: #3b5998;
+    //  }
+    //}
   }
 }

@@ -1,0 +1,28 @@
+@import "~bootstrap/scss/bootstrap";
+
+.portfolio-overview{
+  @extend .card;
+
+  text-align: center;
+  margin-top: 50px;
+
+  &__header{
+    @extend .card-header;
+    display: flex;
+  }
+
+  &__title{
+    //justify-self: center;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    //transform: translateX(50px);
+  }
+
+  &__body{
+    @extend .card-body;
+
+  }
+}

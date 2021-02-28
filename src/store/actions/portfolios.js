@@ -19,16 +19,26 @@ export const getPortfolios = () => dispatch => {
           title: portfolios[id].title
         }))
 
+
+        console.log('payload', payload)
         dispatch({
-            type: ADD_PORTFOLIO,
+            type: GET_PORTFOLIOS,
             payload
         })
     })
 }
 
-export const addPortfolio = ({uid, portfolio}) => dispatch => {
+export const addPortfolio = (portfolio) => dispatch => {
+    const uid = auth.currentUser.uid;
     const portfoliosRef = database.ref('profiles/' + uid + '/portfolios');
-    portfoliosRef.push(portfolio);
+    const newPostKey = portfoliosRef.push();
+    newPostKey.set(portfolio, (error) => {
+        if (error) {
+            console.log('// The write failed...', error)
+        } else {
+            console.log('// Data saved successfully!')
+        }
+    })
 }
 
 
