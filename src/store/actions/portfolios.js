@@ -1,5 +1,4 @@
-import { ADD_PORTFOLIO, REMOVE_PORTFOLIO, GET_PORTFOLIOS, LOADING_PORTFOLIOS } from "../types";
-import { getRequest, postRequest, deleteRequest} from "../api";
+import { GET_PORTFOLIOS, LOADING_PORTFOLIOS } from "../types";
 import {auth, database} from "../../firebase";
 
 export const setPortfoliosLoading = () => ({
@@ -14,6 +13,7 @@ export const getPortfolios = () => dispatch => {
 
     portfoliosRef.on('value', snapshot => {
         const portfolios = snapshot.val();
+        console.log('portfolios', portfolios)
         const payload = Object.keys(portfolios).map((id) => ({
           id,
           title: portfolios[id].title

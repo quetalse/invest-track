@@ -1,14 +1,12 @@
-import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Redirect, useHistory} from "react-router-dom";
 
 /** COMPONENTS**/
 import Typewriter from 'typewriter-effect';
-import { auth } from "../../firebase";
 import { AppLoader } from "../../components/AppLoader";
 
 /** ACTIONS **/
-import { setLoading, setUser, signIn, signUp, setEmail, setPassword, setAccount, clearInputs } from "../../store/actions/auth";
+import {signIn, signUp, setEmail, setPassword, setAccount} from "../../store/actions/auth";
 
 
 import './styles.scss';

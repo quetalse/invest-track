@@ -12,8 +12,8 @@ import {
     SHOW_LOADER,
     SET_ACCOUNT
 } from "../types";
-import { getRequest, postRequest, deleteRequest} from "../api";
-import {auth, database} from "../../firebase";
+import { getRequest, deleteRequest} from "../api";
+import { auth } from "../../firebase";
 
 const url = process.env.REACT_APP_DB_URL;
 

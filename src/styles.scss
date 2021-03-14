@@ -75,7 +75,7 @@ html{
             @extend .mt-2;
 
             &-btn{
-              @include float-right;
+              //@include float-right;
 
               color: var(--color-activity);
               cursor: pointer;
@@ -266,7 +266,6 @@ html{
             @extend .my-5;
           }
         }
-
       }
     }
 

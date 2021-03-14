@@ -1,5 +1,7 @@
-import {ADD_STOCK, GET_STOCKS, REMOVE_STOCK, SHOW_LOADER} from "../types";
+import {ADD_STOCK, GET_PORTFOLIOS, GET_STOCKS, REMOVE_STOCK, SHOW_LOADER} from "../types";
 import { getRequest, postRequest, deleteRequest} from "../api";
+
+import {auth, database} from "../../firebase";
 
 const url = process.env.REACT_APP_FIREBASE_DATABASE_URL;
 
@@ -9,17 +11,35 @@ export const getAll = () => async dispatch => {
 
     dispatch(showLoader());
 
-    const data = await getRequest(`${url}/stocks.json`);
+    const stocks = database.ref('stocks/');
 
-    const payload = Object.keys(data).map(key => ({
-        ...data[key],
-        id: key
-    }))
+    stocks.on('value', snapshot => {
+        const payload = snapshot.val();
+        // const payload = Object.keys(portfolios).map((id) => ({
+        //     id,
+        //     title: portfolios[id].title
+        // }))
 
-    dispatch({
-        type: GET_STOCKS,
-        payload
+
+        console.log('stocks', stocks)
+        dispatch({
+            type: GET_PORTFOLIOS,
+            payload
+        })
     })
+
+    // console.log('data', data)
+    // console.log('url', url)
+    //
+    // const payload = Object.keys(data).map(key => ({
+    //     ...data[key],
+    //     id: key
+    // }))
+    //
+    // dispatch({
+    //     type: GET_STOCKS,
+    //     payload
+    // })
 };
 export const add = title => async dispatch => {
     const stock = {

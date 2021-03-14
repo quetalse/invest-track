@@ -74,14 +74,14 @@ export const PortfoliosList = () => {
     const [showModal, setShowModal] = useState(false);
     const {data, loading} = useSelector(state => state.portfolios);
 
-    console.log('data, loading', data, loading)
+    // console.log('data, loading', data, loading)
 
     // Получаем список портфелей юзера если они не загружены и не загружаются
     useEffect(() => {
         if(!data || !loading){
             dispatch(getPortfolios());
         }
-    }, [dispatch])
+    }, [dispatch, data, loading])
 
     const addPortfolio = () => {
         setShowModal(true);

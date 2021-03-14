@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 // import { auth, database } from "../../../firebase";
 
 /** APP COMPONENTS**/
@@ -105,9 +104,6 @@ export const PortfolioModal = ({showModal, closeModal}) => {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    {/*<Button variant="secondary" onClick={closeModal}>*/}
-                    {/*    Close*/}
-                    {/*</Button>*/}
                     <button className="app-button" onClick={handleAddPortfolio}>Add</button>
                 </Modal.Footer>
             </Modal>
