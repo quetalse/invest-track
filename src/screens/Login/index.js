@@ -1,16 +1,18 @@
+import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Redirect, useHistory} from "react-router-dom";
 
 /** COMPONENTS**/
-import Typewriter from 'typewriter-effect';
 import { AppLoader } from "../../components/AppLoader";
+import { AppLogo } from "../../components/AppLogo";
 
 /** ACTIONS **/
-import {signIn, signUp, setEmail, setPassword, setAccount} from "../../store/actions/auth";
+import {signIn, signUp, setUser, setEmail, setPassword, setAccount} from "../../store/actions/auth";
 
+/** FIREBASE **/
+import { auth } from "../../firebase";
 
 import './styles.scss';
-
 
 export const Login = (props) => {
 
@@ -28,34 +30,21 @@ export const Login = (props) => {
             hasAccount: auth.hasAccount,
             loading: auth.loading
         }
-    })
+    });
+    let [isCheckUser, setCheckUser] = useState(true);
 
-    // console.log('user', user)
-    // console.log('password', password)
-    // console.log('emailError', emailError)
-    // console.log(' passwordError ',  passwordError)
-    // console.log('hasAccount',hasAccount)
-
-
-    // const authListener = () => {
-    //     auth.onAuthStateChanged(user => {
-    //         if(user){
-    //             // console.log('user', user)
-    //             dispatch(clearInputs());
-    //             dispatch(setUser(user));
-    //         }else{
-    //             dispatch(setUser(''));
-    //         }
-    //         dispatch(setLoading(false))
-    //     })
-    // }
-    //
-    // useEffect(() => {
-    //     authListener()
-    // }, [])
-
-
-    console.log('user', user)
+    useEffect(() => {
+        auth.onAuthStateChanged(user => {
+            if(user){
+                // dispatch(clearInputs());
+                dispatch(setUser(user));
+            }else{
+                setCheckUser(false);
+                dispatch(setUser(''));
+            }
+            // dispatch(setLoading(false))
+        })
+    }, [dispatch])
 
     if(user) {
         const { from } = history.location.state || { from: { pathname: '/' } }
@@ -64,77 +53,68 @@ export const Login = (props) => {
 
     return(
         <div className="login-page">
-            <div className="login-page__logo app-logo">
-                <Typewriter
-                    onInit={(typewriter) => {
-                        typewriter.typeString('<strong style="font-size: 3.9rem; text-align: left">Hello! it\'s </strong>')
-                            .pauseFor(400)
-                            .deleteAll(20)
-                            .typeString('<strong class="mx-auto" >Invest Track</strong>')
-                            .start();
-                    }}
-                    options={{
-                        delay: 30
-                    }}
-                />
-            </div>
-            <div className="login-page__form app-form">
-                    <div className="app-form__header">{hasAccount ? 'Sign In' : 'Sign Up'}</div>
-                    <div className="app-form__body">
-                        <div className="app-form__input app-input">
-                            <input
-                                type="email"
-                                id="inputEmail"
-                                className={`app-input__input ${emailError && 'app-input__input_error'}`}
-                                placeholder="Email address"
-                                required
-                                autoFocus
-                                value={email}
-                                onChange={e => dispatch(setEmail(e.target.value))}
-                            />
-                            <label
-                                className="app-input__label"
-                                htmlFor="inputEmail"
-                            >Email address</label>
-                            <p className="app-input__error-message">{emailError}</p>
+            {isCheckUser ? <AppLoader/> :
+                <>
+                    <AppLogo modifier="login-page__logo" isTyping={true}/>
+                    <div className="login-page__form app-form">
+                        <div className="app-form__header">{hasAccount ? 'Sign In' : 'Sign Up'}</div>
+                        <div className="app-form__body">
+                            <div className="app-form__input app-input">
+                                <input
+                                    type="email"
+                                    id="inputEmail"
+                                    className={`app-input__input ${emailError && 'app-input__input_error'}`}
+                                    placeholder="Email address"
+                                    required
+                                    autoFocus
+                                    value={email}
+                                    onChange={e => dispatch(setEmail(e.target.value))}
+                                />
+                                <label
+                                    className="app-input__label"
+                                    htmlFor="inputEmail"
+                                >Email address</label>
+                                <p className="app-input__error-message">{emailError}</p>
+                            </div>
+                            <div className="app-form__input app-input">
+                                <input
+                                    type="password"
+                                    id="inputPassword"
+                                    className={`app-input__input ${passwordError && 'error'}`}
+                                    placeholder="Password"
+                                    required
+                                    value={password}
+                                    onChange={e => dispatch(setPassword(e.target.value))}
+                                />
+                                <label
+                                    className="app-input__label"
+                                    htmlFor="inputPassword"
+                                >Password</label>
+                                <p className="app-input__error-message">{passwordError}</p>
+                            </div>
+                            <button
+                                className="app-form__button"
+                                onClick={hasAccount ?
+                                    () => dispatch(signIn({email, password})) :
+                                    () => dispatch(signUp({email, password}))
+                                }
+                            >
+                                {hasAccount ? 'Sign in' : 'Sign up'}
+                                {loading && <AppLoader modifier="app-loader_sm" />}
+                            </button>
                         </div>
-                        <div className="app-form__input app-input">
-                            <input
-                                type="password"
-                                id="inputPassword"
-                                className={`app-input__input ${passwordError && 'error'}`}
-                                placeholder="Password"
-                                required
-                                value={password}
-                                onChange={e => dispatch(setPassword(e.target.value))}
-                            />
+                        <div className="app-form__footer ">
+                            {hasAccount ? 'Don\'t have an account?' : 'Have an account?'}
                             <label
-                                className="app-input__label"
-                                htmlFor="inputPassword"
-                            >Password</label>
-                            <p className="app-input__error-message">{passwordError}</p>
+                                className="app-form__footer-btn"
+                                onClick={() => dispatch(setAccount(!hasAccount))}
+                            >
+                                {hasAccount ? 'Sing up' : 'Sign in'}
+                            </label>
                         </div>
-                        <button
-                            className="app-button"
-                            onClick={hasAccount ?
-                                () => { dispatch(signIn({email, password}))} :
-                                () => dispatch(signUp({email, password}))
-                            }
-                        >
-                            {hasAccount ? 'Sign in' : 'Sign up'}
-                            {loading && <AppLoader className="app-loader-sm" />}
-                        </button>
                     </div>
-                    <div className="app-form__footer ">
-                        {hasAccount ? 'Don\'t have an account?' : 'Have an account?'}
-                        <label
-                            className="app-form__footer-btn"
-                            onClick={() => dispatch(setAccount(!hasAccount))}
-                        >
-                            {hasAccount ? 'Sing up' : 'Sign in'}
-                        </label>
-                    </div>
-                </div>
+                </>
+            }
         </div>
     )
 }

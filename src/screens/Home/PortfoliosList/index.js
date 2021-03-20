@@ -9,9 +9,9 @@ import { AppLoader } from "../../../components/AppLoader";
 import { PortfolioCard } from "./PortfolioCard";
 import { PortfolioModal } from "./PortfolioModal";
 
-
 /** ACTIONS **/
 import { getPortfolios } from "../../../store/actions/portfolios";
+import { getPortfolioStocks } from "../../../store/actions/stocks";
 // import portfolio from "../../../assets/images/portfolio.png";
 
 import "./styles.scss";
@@ -72,15 +72,12 @@ export const PortfoliosList = () => {
 
     const dispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
-    const {data, loading} = useSelector(state => state.portfolios);
 
-    // console.log('data, loading', data, loading)
+    const {data, loading} = useSelector(state => state.portfolios);
 
     // Получаем список портфелей юзера если они не загружены и не загружаются
     useEffect(() => {
-        if(!data || !loading){
-            dispatch(getPortfolios());
-        }
+        if(!data && !loading) dispatch(getPortfolios());
     }, [dispatch, data, loading])
 
     const addPortfolio = () => {
@@ -90,16 +87,18 @@ export const PortfoliosList = () => {
     const renderPortfolios = (data) => {
 
         const haveData = !!data.length;
+
         const pickPortfolio = (id) => {
             console.log('выбран портфель', id)
+            dispatch(getPortfolioStocks(id));
         }
 
         return (
             <ul className={`portfolios-list__list ${haveData ? '' : 'portfolios-list__list--center'}`}>
-                {data.length ? (
+                {haveData ? (
                     data.map(({title, id}) => (
-                        <li className="portfolios-list__card" key={`${id}`} onClick={() => pickPortfolio(id)}>
-                            <PortfolioCard title={title}/>
+                        <li className="portfolios-list__card" key={`${id}`}>
+                            <PortfolioCard title={title} onPickPortfolio={() => pickPortfolio(id)}/>
                         </li>
                     ))
                 ) : (
@@ -123,7 +122,7 @@ export const PortfoliosList = () => {
                 </div>
             </div>
             <div className="portfolios-list__body">
-                {loading && <AppLoader modifier={"app-loader--center"}/>}
+                {loading && <AppLoader modifier={"app-loader_center"}/>}
                 {data && renderPortfolios(data)}
             </div>
             <PortfolioModal showModal={showModal} closeModal={ () => setShowModal(false)}/>

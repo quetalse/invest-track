@@ -3,7 +3,15 @@
 .portfolio-card{
   width: 160px;
   //transition: all 0s linear 300ms, opacity 300ms;
-  transition: 0.15s all ease;
+
+  &__body{
+    transition: 0.15s all ease;
+
+    &:hover{
+      cursor: pointer;
+      transform: scale(1.02);
+    }
+  }
 
   &__pic{
     width: 100%;
@@ -26,7 +34,6 @@
 
 
   &:hover{
-    transform: scale(1.02);
 
     .portfolio-card__actions{
     //  display: flex;

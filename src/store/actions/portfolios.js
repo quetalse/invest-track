@@ -8,23 +8,28 @@ export const setPortfoliosLoading = () => ({
 export const getPortfolios = () => dispatch => {
     const uid = auth.currentUser.uid;
     const portfoliosRef = database.ref('profiles/' + uid + '/portfolios');
-
     dispatch(setPortfoliosLoading());
 
-    portfoliosRef.on('value', snapshot => {
-        const portfolios = snapshot.val();
-        console.log('portfolios', portfolios)
-        const payload = Object.keys(portfolios).map((id) => ({
-          id,
-          title: portfolios[id].title
-        }))
-
-
-        console.log('payload', payload)
-        dispatch({
-            type: GET_PORTFOLIOS,
-            payload
-        })
+    portfoliosRef
+    .on('value', snapshot => {
+        if(snapshot.exists()){
+            const portfolios = snapshot.val();
+            const payload = Object.keys(portfolios).map((id) => ({
+                id,
+                title: portfolios[id].title
+            }));
+            dispatch({
+                type: GET_PORTFOLIOS,
+                payload
+            })
+        }else{
+            dispatch({
+                type: GET_PORTFOLIOS,
+                payload: []
+            })
+        }
+    }, function(error) {
+        console.error('error', error);
     })
 }
 

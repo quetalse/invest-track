@@ -15,7 +15,6 @@ export const ProtectedRoute = ({component: Component, ...rest }) => {
 
     useEffect(() => {
         auth.onAuthStateChanged(user => {
-
             if(user){
                 dispatch(clearInputs());
                 dispatch(setUser(user));

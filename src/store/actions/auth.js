@@ -7,65 +7,10 @@ import {
     CLEAR_ERRORS,
     EMAIL_ERROR,
     PASSWORD_ERROR,
-    GET_STOCKS,
-    REMOVE_STOCK,
-    SHOW_LOADER,
     SET_ACCOUNT
 } from "../types";
-import { getRequest, deleteRequest} from "../api";
+
 import { auth } from "../../firebase";
-
-const url = process.env.REACT_APP_DB_URL;
-
-export const showLoader = () => ({type: SHOW_LOADER});
-
-export const getAll = () => async dispatch => {
-
-    dispatch(showLoader());
-
-    const data = await getRequest(`${url}/stocks.json`);
-
-    const payload = Object.keys(data).map(key => ({
-        ...data[key],
-        id: key
-    }))
-
-    dispatch({
-        type: GET_STOCKS,
-        payload
-    })
-};
-// export const add = title => async dispatch => {
-//     const stock = {
-//         title, date: new Date().toJSON()
-//     }
-//     try{
-//         const data = await postRequest({
-//             url: `${url}/stocks.json`,
-//             stock
-//         })
-//
-//         const payload = {
-//             ...stock,
-//             id: data.name
-//         };
-//
-//         dispatch({
-//             type: ADD_STOCK,
-//             payload
-//         })
-//
-//     }catch (e) {
-//         throw new Error(e.message)
-//     }
-// };
-export const remove = id => async dispatch => {
-    await deleteRequest(`${url}/stocks/${id}.json`);
-    dispatch({
-        type: REMOVE_STOCK,
-        payload: id
-    })
-}
 
 export const setLoading = (status) => ({
     type: SET_LOADING,
@@ -82,12 +27,11 @@ export const setUser = (user) => ({
     payload: user
 });
 
-export const setEmail = (email) => {
-    return{
-        type: SET_EMAIL,
-        payload: email
-    }
-};
+export const setEmail = (email) => ({
+    type: SET_EMAIL,
+    payload: email
+
+});
 
 export const setPassword = (password) => ({
     type: SET_PASSWORD,
@@ -116,6 +60,7 @@ export const signIn = ({email, password}) => dispatch => {
     dispatch(clearErrors());
     dispatch(setLoading(true));
     auth.signInWithEmailAndPassword(email, password)
+        .then(userCredential => dispatch(setUser(userCredential.user)))
         .catch(error => {
             switch (error.code) {
                 case "auth/invalid-email":
@@ -130,7 +75,6 @@ export const signIn = ({email, password}) => dispatch => {
             }
             dispatch(setLoading(false))
         })
-
 }
 
 export const signUp = ({email, password}) => dispatch => {
@@ -138,24 +82,8 @@ export const signUp = ({email, password}) => dispatch => {
     dispatch(setLoading());
     dispatch(setLoading(true))
     auth.createUserWithEmailAndPassword(email, password)
-        // .then((userCredential) => {
-        //     // let ref = database.ref('profiles');
-        //     // console.log( ref.key)
-        //     // ref.once('value')
-        //     //     .then((snapshot) => {
-        //     //        console.log(snapshot.key)
-        //     //        console.log(snapshot.exists())
-        //     //     });
-        //
-        //     database.ref('profiles/' + userCredential.user.uid)
-        //         .set({
-        //             username: userCredential.user.email,
-        //             portfolios: `${[]}`
-        //         })
-        //
-        // })
+        .then(userCredential => dispatch(setUser(userCredential.user)))
         .catch(error => {
-            console.log(error.code)
             switch (error.code) {
                 case "auth/email-already-in-use":
                 case "auth/invalid-email":

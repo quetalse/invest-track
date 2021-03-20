@@ -9,7 +9,9 @@ import Tab from 'react-bootstrap/Tab';
 // import { AppLoader } from "../../../components/AppLoader";
 
 /** COMPONENTS **/
-// import { PortfolioCard } from "../PortfolioCard";
+import { TabFinResult } from "./TabFinResult";
+import { TabStockList } from "./TabStockList";
+import { TabTrackedList } from "./TabTrackedList";
 // import { PortfolioModal } from "../PortfolioModal";
 
 
@@ -21,7 +23,7 @@ import "./styles.scss";
 
 export const PortfolioOverview = () => {
 
-    const [key, setKey] = useState('home');
+    const [key, setKey] = useState('FinResults');
 
     return (
         <div className="portfolio-overview">
@@ -35,13 +37,13 @@ export const PortfolioOverview = () => {
                     onSelect={(k) => setKey(k)}
                 >
                     <Tab eventKey="FinResults" title="Fin results">
-                        Line Chart
+                        <TabFinResult/>
                     </Tab>
                     <Tab eventKey="StocksList" title="Stocks list">
-                        List
+                        <TabStockList/>
                     </Tab>
                     <Tab eventKey="TrackedStocks" title="Tracked stocks">
-                       List
+                        <TabTrackedList/>
                     </Tab>
                 </Tabs>
                 {/*{loading && <AppLoader modifier={"app-loader--center"}/>}*/}

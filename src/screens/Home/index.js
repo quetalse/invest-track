@@ -1,5 +1,5 @@
-import {useEffect} from 'react';
-import { useDispatch } from "react-redux";
+// import {useEffect} from 'react';
+// import { useDispatch } from "react-redux";
 
 /** COMPONENTS **/
 import { PortfoliosList } from "./PortfoliosList";
@@ -9,24 +9,22 @@ import { PortfolioOverview } from "./PortfolioOverview";
 
 
 /** ACTIONS **/
-import { getAll} from "../../store/actions/stocks";
+// import { getAll} from "../../store/actions/stocks";
 
 import "./styles.scss";
 
-
 export const Home = () => {
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     // const {data, loading} = useSelector(state => state.stocks);
 
-
-    const getAllStocks = () => dispatch(getAll());
+    // const getAllStocks = () => dispatch(getAll());
     // const removeStock = id => dispatch(remove(id));
 
-    useEffect(() => {
-        getAllStocks()
-        // eslint-disable-next-line
-    }, []);
+    // useEffect(() => {
+    //     getAllStocks()
+    //     // eslint-disable-next-line
+    // }, []);
 
     // const StockList = () => (
     //     <div className="home__list">
