@@ -13,8 +13,6 @@ export const getPortfolioStocks = (portfolioId) => dispatch => {
     const uid = auth.currentUser.uid;
     const portfolioStocksRef = database.ref('profiles/' + uid + '/portfolios/' + portfolioId + '/stocks');
 
-
-
     dispatch(setPortfolioStocksLoading());
 
     portfolioStocksRef

@@ -1,4 +1,4 @@
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 // import { useState } from "react";
 // import { useDispatch, useSelector } from "react-redux";
@@ -9,23 +9,32 @@ import {useSelector} from "react-redux";
 
 /** APP COMPONENTS**/
 import {AppLoader} from "../../../../components/AppLoader";
+import {useEffect} from "react";
+import {getPortfolios} from "../../../../store/actions/portfolios";
 
 /** COMPONENTS **/
 // import { PortfolioCard } from "../PortfolioCard";
 // import { PortfolioModal } from "../PortfolioModal";
 
 
-
-
 /** ACTIONS **/
-// import { getPortfolios } from "../../../store/actions/portfolios";
+import { getPortfolioStocks } from "../../../../store/actions/stocks";
 // import portfolio from "../../../assets/images/portfolio.png";
 
 // import "./styles.scss";
 
 export const TabFinResult = () => {
 
-    const {data, loading} = useSelector(state => state.stocks);
+    const dispatch = useDispatch();
+    const { activePortfolio } = useSelector(state => state.portfolios);
+    const {data: stockList, loading} = useSelector(state => state.stocks);
+
+    // Получаем список список ценых бумаг портфеля юзера когда выбран портфель
+    useEffect(() => {
+        if(!stockList && !loading && activePortfolio){
+            dispatch(getPortfolioStocks(activePortfolio));
+        }
+    }, [activePortfolio, stockList, loading, dispatch])
 
     const renderChart = (data) => {
 
@@ -34,14 +43,21 @@ export const TabFinResult = () => {
         if(hasData){
 
         }else{
-            return <span>Not enough data</span>
+            return (
+                <>
+                    <b>Not enough data</b>
+                    <div className="tab-fin-result__add-btn">
+                        <button type="button" className="app-button" onClick={() => console.log('add')}>Add new stock</button>
+                    </div>
+                </>
+            )
         }
     }
 
     return (
-        <div className="tab-finresult">
+        <div className="tab-fin-result">
             {loading && <AppLoader modifier={"app-loader_center"}/>}
-            {data ? renderChart(data) : <span>Choose portfolio</span>}
+            {activePortfolio && stockList ? renderChart(stockList) : <em> Choose portfolio </em>}
         </div>
     )
 }

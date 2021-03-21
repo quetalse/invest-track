@@ -11,6 +11,7 @@ import { PortfolioModal } from "./PortfolioModal";
 
 /** ACTIONS **/
 import { getPortfolios } from "../../../store/actions/portfolios";
+import { setActivePortfolio } from "../../../store/actions/portfolios";
 import { getPortfolioStocks } from "../../../store/actions/stocks";
 // import portfolio from "../../../assets/images/portfolio.png";
 
@@ -90,7 +91,8 @@ export const PortfoliosList = () => {
 
         const pickPortfolio = (id) => {
             console.log('выбран портфель', id)
-            dispatch(getPortfolioStocks(id));
+            // dispatch(getPortfolioStocks(id));
+            dispatch(setActivePortfolio(id));
         }
 
         return (

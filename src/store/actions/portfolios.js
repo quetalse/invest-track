@@ -1,8 +1,13 @@
-import { GET_PORTFOLIOS, LOADING_PORTFOLIOS } from "../types";
+import { GET_PORTFOLIOS, LOADING_PORTFOLIOS, SET_ACTIVE_PORTFOLIO } from "../types";
 import {auth, database} from "../../firebase";
 
 export const setPortfoliosLoading = () => ({
     type: LOADING_PORTFOLIOS
+});
+
+export const setActivePortfolio = (id) => ({
+    type: SET_ACTIVE_PORTFOLIO,
+    payload: id
 });
 
 export const getPortfolios = () => dispatch => {
@@ -11,7 +16,8 @@ export const getPortfolios = () => dispatch => {
     dispatch(setPortfoliosLoading());
 
     portfoliosRef
-    .on('value', snapshot => {
+    .on('value',
+        snapshot => {
         if(snapshot.exists()){
             const portfolios = snapshot.val();
             const payload = Object.keys(portfolios).map((id) => ({
@@ -28,8 +34,9 @@ export const getPortfolios = () => dispatch => {
                 payload: []
             })
         }
-    }, function(error) {
-        console.error('error', error);
+    },
+        function(error) {
+            console.error('error', error);
     })
 }
 
