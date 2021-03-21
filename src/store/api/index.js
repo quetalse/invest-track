@@ -3,7 +3,7 @@ import axios from "axios";
 export const getRequest = async (url) => {
     try{
         const result = await axios.get(url);
-
+        console.log('result', result)
         return result.data || {};
     }catch (e) {
 

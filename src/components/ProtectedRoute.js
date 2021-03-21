@@ -24,7 +24,7 @@ export const ProtectedRoute = ({component: Component, ...rest }) => {
             dispatch(setLoading(false));
             setLoadingAuth(false);
         })
-    }, [])
+    }, [dispatch])
 
     if(loadingAuth) return (
         <div className="login-page login-page-center">

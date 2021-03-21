@@ -2,10 +2,15 @@ import { combineReducers } from "redux";
 
 import { auth } from "./auth";
 import { alert } from "./alert";
+import { portfolios } from "./portfolios";
 import { stocks } from "./stocks";
+import { trackedStocks } from "./trackedStocks";
+
 
 export const rootReducer = combineReducers({
-    auth,
-    alert,
-    stocks
+    auth, // Firebase auth
+    alert, // Notifications
+    portfolios, // Users portfolios list
+    stocks, // Stocks in chosen portfolio
+    trackedStocks, // Tracked stocks in chosen portfolio
 })

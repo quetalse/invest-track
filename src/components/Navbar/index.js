@@ -1,6 +1,10 @@
 import { NavLink } from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import { logOut } from "../../store/actions/auth";
+
+
+/** COMPONENTS**/
+import { AppLogo } from "../AppLogo";
 
 import "./styles.scss";
 
@@ -10,9 +14,7 @@ export const Navbar = () => {
 
     return (
         <nav className="app-navbar">
-            <div className="app-navbar__logo">
-                Invest track
-            </div>
+            <AppLogo modifier="app-navbar__logo" isTyping={false}/>
             <ul className="app-navbar__menu">
                 <li className="app-navbar__item">
                     <NavLink
@@ -55,7 +57,8 @@ export const Navbar = () => {
                     >
                         Logout
                     </span>
-                    </li>}
+                </li>
+                }
             </ul>
         </nav>
     )

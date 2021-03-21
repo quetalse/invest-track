@@ -1,0 +1,18 @@
+.app-logo{
+  //background-image: url(https://media.giphy.com/media/26BRPqbkk5EhlzKrC/source.gif);
+  //background-image: url(https://giffiles.alphacoders.com/208/208725.gif);
+  //background-image: url(https://media2.giphy.com/media/3o7TKrZs4qBmcPBzos/giphy-downsized.gif);
+  //background-image: url(https://cdn.dribbble.com/users/39141/screenshots/4370017/01_copy_195.gif);
+  background-image: url('../../assets/images/logo-animation.gif');
+  background-size: cover;
+  color: transparent;
+  -webkit-background-clip: text;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &-sm{
+
+  }
+}

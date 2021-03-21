@@ -1,0 +1,66 @@
+@import "~bootstrap/scss/bootstrap";
+
+.portfolios-list{
+  @extend .card;
+
+  text-align: center;
+
+  &__header{
+    @extend .card-header;
+    display: flex;
+  }
+
+  &__title{
+    //justify-self: center;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    transform: translateX(50px);
+  }
+
+  &__add-btn{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100px;
+    margin: 0 auto;
+  }
+
+  &__body{
+    @extend .card-body;
+    padding: 10px;
+  }
+
+  &__list{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    overflow: auto;
+    padding: 0;
+    margin: 0;
+    justify-content: space-around;
+
+    &--center{
+      justify-content: center;
+    }
+  }
+
+  &__card{
+    padding: 10px;
+
+    //&:hover{
+    //  cursor: pointer;
+    //  color: var(--color-light-dark) !important;
+    //  //background-color: var(--color-activity-hover);
+    //  border: 1px solid var(--color-activity);
+    //  /* font-size: 80%; */
+    //  border-radius: .5rem;
+    //  /* letter-spacing: .1rem; */
+    //  /* font-weight: bold; */
+    //  /* padding: 1rem; */
+    //  transition: all 0.2s;
+    //}
+  }
+}
