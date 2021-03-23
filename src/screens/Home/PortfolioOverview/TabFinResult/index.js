@@ -15,7 +15,7 @@ import {useEffect} from "react";
 /** COMPONENTS **/
 // import { PortfolioCard } from "../PortfolioCard";
 // import { PortfolioModal } from "../PortfolioModal";
-
+import { Line } from 'react-chartjs-2'
 
 /** ACTIONS **/
 import { getPortfolioStocks } from "../../../../store/actions/stocks";
@@ -38,10 +38,19 @@ export const TabFinResult = () => {
 
     const renderChart = (data) => {
 
-        const hasData = !! data.length;
+        const hasData = ! data.length;
 
         if(hasData){
-
+            return <Line
+                        data={{
+                            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                            datasets: [
+                                {
+                                    data: [65, 59, 80, 81, 56, 55, 40]
+                                }
+                            ]
+                        }}
+                    />
         }else{
             return (
                 <>
