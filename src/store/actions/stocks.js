@@ -1,8 +1,8 @@
 import {
     LOADING_PORTFOLIO_STOCKS,
-    ADD_PORTFOLIO_STOCK,
+    // ADD_PORTFOLIO_STOCK,
     GET_PORTFOLIO_STOCKS,
-    REMOVE_PORTFOLIO_STOCK,
+    // REMOVE_PORTFOLIO_STOCK,
 } from "../types";
 
 import {auth, database} from "../../firebase";

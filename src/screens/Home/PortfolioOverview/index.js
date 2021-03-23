@@ -1,5 +1,5 @@
-import {useEffect, useState} from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 // import { useDispatch, useSelector } from "react-redux";
 // import { auth, database } from "../../../firebase";
 
@@ -21,7 +21,7 @@ import { TabTrackedList } from "./TabTrackedList";
 // import portfolio from "../../../assets/images/portfolio.png";
 
 import "./styles.scss";
-import {getPortfolioStocks} from "../../../store/actions/stocks";
+// import {getPortfolioStocks} from "../../../store/actions/stocks";
 
 export const PortfolioOverview = () => {
 

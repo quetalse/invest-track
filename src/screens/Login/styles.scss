@@ -13,7 +13,6 @@
   max-width: 100%;
   align-items: center;
 
-
   @include media-breakpoint-up(xs) {
     @include make-col(12);
     //font-size: 12px;
@@ -25,6 +24,9 @@
     @include make-col(8);
   }
   @include media-breakpoint-up(lg) {
+    @include make-col(5);
+  }
+  @include media-breakpoint-up(xl) {
     @include make-col(5);
   }
 
@@ -100,6 +102,10 @@
   &__input{
     position: relative;
     margin-bottom: 1.3rem;
+
+    &_error{
+      margin-bottom: 2rem;
+    }
   }
 
   &__button{
@@ -217,4 +223,28 @@
     color: var(--color-error);
     font-weight: 800;
   }
+}
+
+@include media-breakpoint-up(xs) {
+  //.app-form__input{
+  //  margin-bottom: 2rem;
+  //}
+}
+@include media-breakpoint-up(sm) {
+  //@include make-col(10);
+}
+@include media-breakpoint-up(md) {
+  //.app-form__input{
+  //  margin-bottom: 2rem;
+  //}
+}
+@include media-breakpoint-up(lg) {
+  //.app-form__input{
+  //  margin-bottom: 1.3rem;
+  //}
+}
+@include media-breakpoint-up(xl) {
+  //.app-form__input{
+  //  margin-bottom: 2rem;
+  //}
 }

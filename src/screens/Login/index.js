@@ -59,7 +59,7 @@ export const Login = (props) => {
                     <div className="login-page__form app-form">
                         <div className="app-form__header">{hasAccount ? 'Sign In' : 'Sign Up'}</div>
                         <div className="app-form__body">
-                            <div className="app-form__input app-input">
+                            <div className={`app-form__input ${emailError ? 'app-form__input_error' : ''} app-input`}>
                                 <input
                                     type="email"
                                     id="inputEmail"
@@ -76,7 +76,7 @@ export const Login = (props) => {
                                 >Email address</label>
                                 <p className="app-input__error-message">{emailError}</p>
                             </div>
-                            <div className="app-form__input app-input">
+                            <div className={`app-form__input ${passwordError ? 'app-form__input_error' : ''} app-input`}>
                                 <input
                                     type="password"
                                     id="inputPassword"

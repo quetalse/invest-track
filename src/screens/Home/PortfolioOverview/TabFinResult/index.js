@@ -10,7 +10,7 @@ import {useDispatch, useSelector} from "react-redux";
 /** APP COMPONENTS**/
 import {AppLoader} from "../../../../components/AppLoader";
 import {useEffect} from "react";
-import {getPortfolios} from "../../../../store/actions/portfolios";
+// import {getPortfolios} from "../../../../store/actions/portfolios";
 
 /** COMPONENTS **/
 // import { PortfolioCard } from "../PortfolioCard";
