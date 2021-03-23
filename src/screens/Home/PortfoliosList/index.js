@@ -11,7 +11,6 @@ import { PortfolioModal } from "./PortfolioModal";
 
 /** ACTIONS **/
 import { getPortfolios } from "../../../store/actions/portfolios";
-import { setActivePortfolio } from "../../../store/actions/portfolios";
 // import { getPortfolioStocks } from "../../../store/actions/stocks";
 // import portfolio from "../../../assets/images/portfolio.png";
 
@@ -82,25 +81,22 @@ export const PortfoliosList = () => {
     }, [dispatch, data, loading])
 
     const addPortfolio = () => {
-        setShowModal(true);
+        setShowModal({
+            show: true,
+            action: 'add'
+        });
     }
 
     const renderPortfolios = (data) => {
 
         const haveData = !!data.length;
 
-        const pickPortfolio = (id) => {
-            console.log('выбран портфель', id)
-            // dispatch(getPortfolioStocks(id));
-            dispatch(setActivePortfolio(id));
-        }
-
         return (
             <ul className={`portfolios-list__list ${haveData ? '' : 'portfolios-list__list--center'}`}>
                 {haveData ? (
                     data.map(({title, id}) => (
                         <li className="portfolios-list__card" key={`${id}`}>
-                            <PortfolioCard title={title} onPickPortfolio={() => pickPortfolio(id)}/>
+                            <PortfolioCard title={title} portfolioId={id}/>
                         </li>
                     ))
                 ) : (

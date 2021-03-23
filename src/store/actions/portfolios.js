@@ -1,4 +1,4 @@
-import { GET_PORTFOLIOS, LOADING_PORTFOLIOS, SET_ACTIVE_PORTFOLIO } from "../types";
+import {GET_PORTFOLIOS, ADD_PORTFOLIO, LOADING_PORTFOLIOS, SET_ACTIVE_PORTFOLIO, REMOVE_PORTFOLIO} from "../types";
 import {auth, database} from "../../firebase";
 
 export const setPortfoliosLoading = () => ({
@@ -16,8 +16,8 @@ export const getPortfolios = () => dispatch => {
     dispatch(setPortfoliosLoading());
 
     portfoliosRef
-    .on('value',
-        snapshot => {
+    .once('value')
+    .then(snapshot => {
         if(snapshot.exists()){
             const portfolios = snapshot.val();
             const payload = Object.keys(portfolios).map((id) => ({
@@ -44,11 +44,51 @@ export const addPortfolio = (portfolio) => dispatch => {
     const uid = auth.currentUser.uid;
     const portfoliosRef = database.ref('profiles/' + uid + '/portfolios');
     const newPostKey = portfoliosRef.push();
+
     newPostKey.set(portfolio, (error) => {
         if (error) {
             console.log('// The write failed...', error)
         } else {
+            dispatch({
+                type: ADD_PORTFOLIO,
+                payload: {
+                    ...portfolio,
+                    id: newPostKey.key
+                }
+            })
+        }
+    })
+}
+
+export const editPortfolio = (data) => dispatch => {
+    const uid = auth.currentUser.uid;
+    const portfolioId = data.portfolioId;
+    const portfoliosRef = database.ref('profiles/' + uid + '/portfolios/' + portfolioId);
+
+    console.log('portfoliosRef', portfoliosRef)
+    portfoliosRef.set({
+        title: data.title
+    }, (error) => {
+        if (error) {
+            console.log('// The write failed...', error)
+        } else {
             console.log('// Data saved successfully!')
+        }
+    })
+}
+
+export const deletePortfolio = (portfolioId) => dispatch => {
+    const uid = auth.currentUser.uid;
+    const portfoliosRef = database.ref('profiles/' + uid + '/portfolios/' + portfolioId);
+
+    portfoliosRef.remove( (error) => {
+        if (error) {
+            console.log('// The write failed...', error)
+        } else {
+            dispatch({
+                type: REMOVE_PORTFOLIO,
+                payload: portfolioId
+            })
         }
     })
 }

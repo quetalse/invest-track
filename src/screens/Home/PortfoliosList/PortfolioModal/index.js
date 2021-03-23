@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import Modal from 'react-bootstrap/Modal';
 import {useDispatch} from "react-redux";
 // import { auth, database } from "../../../firebase";
@@ -8,6 +8,7 @@ import {useDispatch} from "react-redux";
 
 /** ACTIONS **/
 import { addPortfolio } from "../../../../store/actions/portfolios";
+import { editPortfolio } from "../../../../store/actions/portfolios";
 
 import './style.scss';
 
@@ -70,30 +71,43 @@ export const PortfolioModal = ({showModal, closeModal}) => {
     const dispatch = useDispatch();
     const [title, setTitle] = useState('')
 
+    useEffect(() => {
+        if(showModal.action === 'edit') setTitle(showModal.title);
+    }, [showModal])
+
     const handleChangeTitle = (event) => {
         setTitle(event.target.value)
     }
     const handleAddPortfolio = () => {
 
         if(title.trim()){
-            dispatch(addPortfolio({
-                title
-            }))
+            if(showModal.action === 'edit'){
+                dispatch(editPortfolio({
+                    title,
+                    portfolioId: showModal.portfolioId
+                }))
+            }else{
+                dispatch(addPortfolio({
+                    title
+                }))
+            }
         }else {
             console.log('Too short')
         }
     }
 
+
+
     return (
         <>
             <Modal
-                show={showModal}
+                show={showModal.show}
                 onHide={closeModal}
                 backdrop="static"
                 keyboard={false}
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Add new investment portfolio</Modal.Title>
+                    <Modal.Title> {showModal.action === 'edit' ? 'Edit title' : 'Add new'} investment portfolio</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className="portfolio-modal">
@@ -104,7 +118,7 @@ export const PortfolioModal = ({showModal, closeModal}) => {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <button className="app-button" onClick={handleAddPortfolio}>Add</button>
+                    <button className="app-button" onClick={handleAddPortfolio}>{showModal.action === 'edit' ? 'Edit' : 'Add'}</button>
                 </Modal.Footer>
             </Modal>
         </>

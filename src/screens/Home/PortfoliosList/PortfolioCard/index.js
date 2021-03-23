@@ -1,5 +1,5 @@
-// import {useEffect} from "react";
-import {useSelector } from "react-redux";
+// import {useDispatch} from "react";
+import { useDispatch } from "react-redux";
 // import { auth, database } from "../../../firebase";
 
 /** APP COMPONENTS**/
@@ -8,82 +8,39 @@ import { AppButton } from "../../../../components/UI/AppButton";
 
 /** ACTIONS **/
 // import { getPortfolios, addPortfolio } from "../../../store/actions/portfolios";
+
 import portfolio from "../../../../assets/images/portfolio.png";
 
 import "./styles.scss";
+import {PortfolioModal} from "../PortfolioModal";
+import {useState} from "react";
+import {deletePortfolio, setActivePortfolio} from "../../../../store/actions/portfolios";
 
-// const PortfolioCard = ({title}) => {
-//
-//     const dispatch = useDispatch();
-//
-//     const addNewPortfolio = () => {
-//         let uid  = auth.currentUser.uid;
-//
-//         dispatch(addPortfolio({uid, portfolio: {title: "Yaroslav"}}));
-//         // let some = database.ref('users/' + currentUserId).set({
-//         //     username: 'hi',
-//         //     email: '1111',
-//         //     profile_picture : "1122"
-//         // });
-//
-//         // let ref = database.ref('portfolios/');
-//         // ref.set('Hello')
-//         //     .then(function() {
-//         //         return ref.once("value");
-//         //     })
-//         //     .then((snapshot) => {
-//         //         console.log('val', snapshot.val())
-//         //     })
-//         // ref.once("value")
-//         //     .then(function(snapshot) {
-//         //         // snapshot.forEach(function (childSnapshot) {
-//         //         //     let key = childSnapshot.key; // "ada"
-//         //         //     console.log('key', key)
-//         //         //     console.log('key', childSnapshot.val())
-//         //         //     // var key = snapshot.key; // "ada"
-//         //         //     // var childKey = snapshot.child("name/last").key; // "last"
-//         //         // });
-//         //
-//         //         console.log('key', snapshot.hasChildren())
-//         //     })
-//
-//
-//     }
-//
-//     return (
-//         <div>
-//             <img width="220" src={portfolio} alt="portfolio"/>
-//             <p>{ title ||
-//             (
-//                 <button
-//                     onClick={addNewPortfolio}
-//                 > Добавить новый портфель</button>
-//             )
-//             }</p>
-//         </div>
-//     )
-// }
+export const PortfolioCard = ({title, portfolioId}) => {
 
-export const PortfolioCard = ({title, onPickPortfolio}) => {
-
-    // const dispatch = useDispatch();
-    const {data, loading} = useSelector(state => state.portfolios);
-
-    console.log('data, loading', data, loading)
+    const dispatch = useDispatch();
+    const [showModal, setShowModal] = useState(false);
+    // const {data, loading} = useSelector(state => state.portfolios);
 
     const handleOverview = () => {
-        console.log('handleOverview')
+        dispatch(setActivePortfolio(portfolioId));
     };
+
     const handleEdit = () => {
-        console.log('handleEdit')
+        setShowModal({
+            show: true,
+            action: 'edit',
+            title: title,
+            portfolioId
+        });
     };
     const handleDelete = () => {
-        console.log('handleDelete')
+        dispatch(deletePortfolio(portfolioId))
     }
 
     return (
         <div className="portfolio-card">
-            <div className="portfolio-card__body" onClick={() => onPickPortfolio()}>
+            <div className="portfolio-card__body" onClick={handleOverview}>
                 <img src={portfolio} alt="portfolio" className="portfolio-card__pic"/>
                 <p className="portfolio-card__title">{title}</p>
             </div>
@@ -98,6 +55,7 @@ export const PortfolioCard = ({title, onPickPortfolio}) => {
                     <AppButton title={<i className="fa fa-trash" aria-hidden="true"/>} handlerClick={handleDelete}/>
                 </div>
             </div>
+            <PortfolioModal showModal={showModal} closeModal={ () => setShowModal(false)}/>
         </div>
     )
 }
