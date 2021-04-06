@@ -1,4 +1,4 @@
-import {GET_PORTFOLIOS, ADD_PORTFOLIO, LOADING_PORTFOLIOS, SET_ACTIVE_PORTFOLIO, REMOVE_PORTFOLIO} from "../types";
+import {GET_PORTFOLIOS, ADD_PORTFOLIO, EDIT_PORTFOLIO, LOADING_PORTFOLIOS, SET_ACTIVE_PORTFOLIO, REMOVE_PORTFOLIO} from "../types";
 import {auth, database} from "../../firebase";
 
 export const setPortfoliosLoading = () => ({
@@ -65,14 +65,20 @@ export const editPortfolio = (data) => dispatch => {
     const portfolioId = data.portfolioId;
     const portfoliosRef = database.ref('profiles/' + uid + '/portfolios/' + portfolioId);
 
-    console.log('portfoliosRef', portfoliosRef)
+    // console.log('portfoliosRef', portfoliosRef)
     portfoliosRef.set({
         title: data.title
     }, (error) => {
         if (error) {
             console.log('// The write failed...', error)
         } else {
-            console.log('// Data saved successfully!')
+            dispatch({
+                type: EDIT_PORTFOLIO,
+                payload: {
+                    portfolioId,
+                    title: data.title
+                }
+            })
         }
     })
 }

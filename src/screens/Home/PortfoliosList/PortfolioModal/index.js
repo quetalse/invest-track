@@ -85,12 +85,13 @@ export const PortfolioModal = ({showModal, closeModal}) => {
                 dispatch(editPortfolio({
                     title,
                     portfolioId: showModal.portfolioId
-                }))
+                }));
             }else{
                 dispatch(addPortfolio({
                     title
                 }))
             }
+            closeModal();
         }else {
             console.log('Too short')
         }

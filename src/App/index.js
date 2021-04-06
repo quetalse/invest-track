@@ -23,7 +23,7 @@ export const App = () => {
                     <Route path={'/login'} component={Login}/>
                     <ProtectedRoute path={'/'} exact component={Home}/>
                     <ProtectedRoute path={'/overview'} exact component={About}/>
-                    <Route component={NotFound} />
+                    <Route component={NotFound}/>
                 </Switch>
             </BrowserRouter>
         </div>
