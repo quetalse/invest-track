@@ -1,102 +1,122 @@
-import {GET_PORTFOLIOS, ADD_PORTFOLIO, EDIT_PORTFOLIO, LOADING_PORTFOLIOS, SET_ACTIVE_PORTFOLIO, REMOVE_PORTFOLIO} from "../types";
+import {SET_PORTFOLIOS, ADD_PORTFOLIO, EDIT_PORTFOLIO, LOADING_PORTFOLIOS, SET_ACTIVE_PORTFOLIO, REMOVE_PORTFOLIO} from "../types";
 import {auth, database} from "../../firebase";
+import firebase from "firebase/app";
 
-export const setPortfoliosLoading = () => ({
+type Portfolio = {
+    title: string
+}
+export const setPortfoliosLoading = (): {type: typeof LOADING_PORTFOLIOS} => ({
     type: LOADING_PORTFOLIOS
 });
 
-export const setActivePortfolio = (id) => ({
+export const setActivePortfolio = (id: string): {type: typeof SET_ACTIVE_PORTFOLIO, payload: string} => ({
     type: SET_ACTIVE_PORTFOLIO,
     payload: id
 });
 
-export const getPortfolios = () => dispatch => {
-    const uid = auth.currentUser.uid;
-    const portfoliosRef = database.ref('profiles/' + uid + '/portfolios');
-    dispatch(setPortfoliosLoading());
+export const setPortfolios = (portfolios: Array<Portfolio>): {type: typeof SET_PORTFOLIOS, payload: Array<Portfolio>} => ({
+    type: SET_PORTFOLIOS,
+    payload: portfolios
+})
 
-    portfoliosRef
-    .once('value')
-    .then(snapshot => {
-        if(snapshot.exists()){
-            const portfolios = snapshot.val();
-            const payload = Object.keys(portfolios).map((id) => ({
-                id,
-                title: portfolios[id].title
-            }));
-            dispatch({
-                type: GET_PORTFOLIOS,
-                payload
-            })
-        }else{
-            dispatch({
-                type: GET_PORTFOLIOS,
-                payload: []
-            })
-        }
-    },
-        function(error) {
-            console.error('error', error);
-    })
+export const getPortfolios = () => (dispatch: any) => {
+    const currentUser: firebase.User | null = auth.currentUser;
+
+    if(currentUser){
+        dispatch(setPortfoliosLoading());
+
+        const uid: string = currentUser.uid;
+        const portfoliosRef = database.ref('profiles/' + uid + '/portfolios');
+        portfoliosRef
+            .once('value')
+            .then(snapshot => {
+                    if(snapshot.exists()){
+                        const portfolios = snapshot.val();
+                        const payload = Object.keys(portfolios).map((id) => ({
+                            id,
+                            title: portfolios[id].title
+                        }));
+                        dispatch(setPortfolios(payload))
+                    }else{
+                        dispatch(setPortfolios([]))
+                    }
+                },
+                function(error) {
+                    console.error('error', error);
+                })
+    }
 }
 
-export const addPortfolio = (portfolio) => dispatch => {
-    const uid = auth.currentUser.uid;
-    const portfoliosRef = database.ref('profiles/' + uid + '/portfolios');
-    const newPostKey = portfoliosRef.push();
+export const addPortfolio = (portfolio: Portfolio) => (dispatch: any) => {
+    const currentUser: firebase.User | null = auth.currentUser;
 
-    newPostKey.set(portfolio, (error) => {
-        if (error) {
-            console.log('// The write failed...', error)
-        } else {
-            dispatch({
-                type: ADD_PORTFOLIO,
-                payload: {
-                    ...portfolio,
-                    id: newPostKey.key
-                }
-            })
-        }
-    })
+    if(currentUser) {
+        const uid: string = currentUser.uid;
+        const portfoliosRef = database.ref('profiles/' + uid + '/portfolios');
+        const newPostKey = portfoliosRef.push();
+
+        newPostKey.set(portfolio, (error) => {
+            if (error) {
+                console.log('// The write failed...', error)
+            } else {
+                dispatch({
+                    type: ADD_PORTFOLIO,
+                    payload: {
+                        ...portfolio,
+                        id: newPostKey.key
+                    }
+                })
+            }
+        })
+    }
 }
 
-export const editPortfolio = (data) => dispatch => {
-    const uid = auth.currentUser.uid;
-    const portfolioId = data.portfolioId;
-    const portfoliosRef = database.ref('profiles/' + uid + '/portfolios/' + portfolioId);
+export const editPortfolio = (data: Portfolio & {portfolioId: string}) => (dispatch: any) => {
+    const currentUser: firebase.User | null = auth.currentUser;
 
-    // console.log('portfoliosRef', portfoliosRef)
-    portfoliosRef.set({
-        title: data.title
-    }, (error) => {
-        if (error) {
-            console.log('// The write failed...', error)
-        } else {
-            dispatch({
-                type: EDIT_PORTFOLIO,
-                payload: {
-                    portfolioId,
-                    title: data.title
-                }
-            })
-        }
-    })
+    if(currentUser) {
+        const uid: string = currentUser.uid;
+        const portfolioId = data.portfolioId;
+        const portfoliosRef = database.ref('profiles/' + uid + '/portfolios/' + portfolioId);
+
+        // console.log('portfoliosRef', portfoliosRef)
+        portfoliosRef.set({
+            title: data.title
+        }, (error) => {
+            if (error) {
+                console.log('// The write failed...', error)
+            } else {
+                dispatch({
+                    type: EDIT_PORTFOLIO,
+                    payload: {
+                        portfolioId,
+                        title: data.title
+                    }
+                })
+            }
+        })
+    }
 }
 
-export const deletePortfolio = (portfolioId) => dispatch => {
-    const uid = auth.currentUser.uid;
-    const portfoliosRef = database.ref('profiles/' + uid + '/portfolios/' + portfolioId);
+export const deletePortfolio = (portfolioId: string) => (dispatch: any) => {
+    const currentUser: firebase.User | null = auth.currentUser;
 
-    portfoliosRef.remove( (error) => {
-        if (error) {
-            console.log('// The write failed...', error)
-        } else {
-            dispatch({
-                type: REMOVE_PORTFOLIO,
-                payload: portfolioId
-            })
-        }
-    })
+    if(currentUser) {
+
+        const uid: string = currentUser.uid;
+        const portfoliosRef = database.ref('profiles/' + uid + '/portfolios/' + portfolioId);
+
+        portfoliosRef.remove((error) => {
+            if (error) {
+                console.log('// The write failed...', error)
+            } else {
+                dispatch({
+                    type: REMOVE_PORTFOLIO,
+                    payload: portfolioId
+                })
+            }
+        })
+    }
 }
 
 

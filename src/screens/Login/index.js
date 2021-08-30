@@ -7,7 +7,7 @@ import { AppLoader } from "../../components/AppLoader";
 import { AppLogo } from "../../components/AppLogo";
 
 /** ACTIONS **/
-import {signIn, signUp, setUser, setEmail, setPassword, setAccount} from "../../store/actions/auth";
+import {signIn, signUp, setUser, setEmail, setPassword, setHasAccount} from "../../store/actions/auth";
 
 /** FIREBASE **/
 import { auth } from "../../firebase";
@@ -107,7 +107,7 @@ export const Login = (props) => {
                             {hasAccount ? 'Don\'t have an account?' : 'Have an account?'}
                             <label
                                 className="app-form__footer-btn"
-                                onClick={() => dispatch(setAccount(!hasAccount))}
+                                onClick={() => dispatch(setHasAccount(!hasAccount))}
                             >
                                 {hasAccount ? 'Sing up' : 'Sign in'}
                             </label>

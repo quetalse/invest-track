@@ -4,42 +4,33 @@ import {useDispatch} from "react-redux";
 // import { auth, database } from "../../../firebase";
 
 /** APP COMPONENTS**/
-// import { AppLoader } from "../../../components/AppLoader";
 
 /** ACTIONS **/
-import { addPortfolio } from "../../../../store/actions/portfolios";
-import { editPortfolio } from "../../../../store/actions/portfolios";
+import { addPortfolioStock } from "../../../../store/actions/stocks";
+// import { editPortfolio } from "../../../../store/actions/portfolios";
 
 import './style.scss';
 
 import portfolio from "../../../../assets/images/portfolio.png";
 
-export const PortfolioModal = ({showModal, closeModal}) => {
+export const StockModal = ({showModal, closeModal}) => {
 
     const dispatch = useDispatch();
     const [title, setTitle] = useState('')
 
-    useEffect(() => {
-        if(showModal.action === 'edit') setTitle(showModal.title);
-    }, [showModal])
-
     const handleChangeTitle = (event) => {
+
+
+
         setTitle(event.target.value)
     }
-    const handleAddPortfolio = () => {
+
+    const handleAddPortfolioStock = () => {
 
         if(title.trim()){
-            if(showModal.action === 'edit'){
-                dispatch(editPortfolio({
-                    title,
-                    portfolioId: showModal.portfolioId
-                }));
-            }else{
-                dispatch(addPortfolio({
-                    title
-                }))
-            }
-            closeModal();
+            dispatch(addPortfolioStock({
+                title
+            }))
         }else {
             console.log('Too short')
         }
@@ -48,13 +39,13 @@ export const PortfolioModal = ({showModal, closeModal}) => {
     return (
         <>
             <Modal
-                show={showModal.show}
+                show={showModal}
                 onHide={closeModal}
                 backdrop="static"
                 keyboard={false}
             >
                 <Modal.Header closeButton>
-                    <Modal.Title> {showModal.action === 'edit' ? 'Edit title' : 'Add new'} investment portfolio</Modal.Title>
+                    <Modal.Title> Add stcok</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className="portfolio-modal">
@@ -65,7 +56,7 @@ export const PortfolioModal = ({showModal, closeModal}) => {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <button className="app-button" onClick={handleAddPortfolio}>{showModal.action === 'edit' ? 'Edit' : 'Add'}</button>
+                    <button className="app-button" onClick={handleAddPortfolioStock}>Add</button>
                 </Modal.Footer>
             </Modal>
         </>

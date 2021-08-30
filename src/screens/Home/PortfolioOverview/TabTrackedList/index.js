@@ -15,11 +15,12 @@
 
 import {AppLoader} from "../../../../components/AppLoader";
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 
 
 /** ACTIONS **/
 import {getPortfolioTrackedStocks} from "../../../../store/actions/trackedStocks";
+import {StockModal} from "../Modal";
 // import { getPortfolios } from "../../../store/actions/portfolios";
 // import portfolio from "../../../assets/images/portfolio.png";
 
@@ -29,6 +30,7 @@ export const TabTrackedList = () => {
 
     const dispatch = useDispatch();
     const { activePortfolio } = useSelector(state => state.portfolios);
+    const [showModal, setShowModal] = useState(false);
     const {data: trackedStockList, loading} = useSelector(state => state.trackedStocks);
 
     // Получаем список список ценых бумаг портфеля юзера когда выбран портфель
@@ -37,6 +39,10 @@ export const TabTrackedList = () => {
             dispatch(getPortfolioTrackedStocks(activePortfolio));
         }
     }, [activePortfolio, trackedStockList, loading, dispatch])
+
+    const addStock = () => {
+        setShowModal(true);
+    }
 
     const renderTable = (data) => {
 
@@ -49,7 +55,7 @@ export const TabTrackedList = () => {
                 <>
                     <b>Not enough data</b>
                     <div className="tab-tracked-list__add-btn">
-                        <button type="button" className="app-button" onClick={() => console.log('add')}>Add new tracked stock</button>
+                        <button type="button" className="app-button" onClick={addStock}>Add new tracked stock</button>
                     </div>
                 </>
             )
@@ -60,6 +66,7 @@ export const TabTrackedList = () => {
         <div className="tab-tracked-list">
             {loading && <AppLoader modifier={"app-loader_center"}/>}
             {trackedStockList ? renderTable(trackedStockList) : <em> Choose portfolio </em>}
+            <StockModal showModal={showModal} closeModal={ () => setShowModal(false)}/>
         </div>
     )
 }

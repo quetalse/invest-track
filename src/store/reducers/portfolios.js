@@ -1,6 +1,6 @@
 import {
     ADD_PORTFOLIO,
-    GET_PORTFOLIOS,
+    SET_PORTFOLIOS,
     EDIT_PORTFOLIO,
     REMOVE_PORTFOLIO,
     LOADING_PORTFOLIOS,
@@ -9,7 +9,7 @@ import {
 
 const handlers = {
     [REMOVE_PORTFOLIO]: (state, {payload}) => ({...state, data: state.data.filter(portfolio => portfolio.id !== payload), activePortfolio: state.activePortfolio === payload ? null : state.activePortfolio}),
-    [GET_PORTFOLIOS]: (state, {payload}) => ({...state, data: payload, loading: false}),
+    [SET_PORTFOLIOS]: (state, {payload}) => ({...state, data: payload, loading: false}),
     [EDIT_PORTFOLIO]: (state, {payload}) => ({...state, data: state.data.map(portfolio => {
            if(portfolio.id === payload.portfolioId) return { title: payload.title, id: portfolio.id};
            return portfolio;
