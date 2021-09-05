@@ -1,11 +1,20 @@
 import { TransitionGroup, CSSTransition } from "react-transition-group";
+
+/** TYPES **/
+import {Stock} from "../../@types/@stock";
+
 import "./styles.scss";
 
+type PropsT = {
+    listData: Array<Stock>
+    onRemove: (id: string) => void
+}
 
-export const AppList = ({listData, onRemove}) => {
+export const AppList: React.FC<PropsT> = ({listData, onRemove}) => {
     return (
+        //@ts-ignore
         <TransitionGroup component="ul" className="app-list">
-                {listData.map( stock => (
+                {listData.length > 0 && listData.map(stock => (
                     <CSSTransition
                         key={`${stock.id}`}
                         classNames={'app-list__item'}
@@ -19,7 +28,7 @@ export const AppList = ({listData, onRemove}) => {
                             <button
                                 type="button"
                                 className="app-list__button"
-                                onClick={() => onRemove(stock.id)}
+                                onClick={() => { if(stock.id) onRemove(stock.id)}}
                             >&times;
                             </button>
                         </li>

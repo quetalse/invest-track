@@ -1,16 +1,15 @@
 import axios from "axios";
 
-export const getRequest = async (url) => {
+export const getRequest = async (url: string) => {
     try{
         const result = await axios.get(url);
-        console.log('result', result)
         return result.data || {};
     }catch (e) {
 
     }
 }
 
-export const postRequest = async ({url, stock}) => {
+export const postRequest = async ({url, stock}: {url: string, stock: any}) => {
     try{
         const result = await axios.post(url, stock);
         return result.data
@@ -19,7 +18,7 @@ export const postRequest = async ({url, stock}) => {
     }
 }
 
-export const deleteRequest = async (url) => {
+export const deleteRequest = async (url: string) => {
     try{
         const result = await axios.delete(url);
         return result.data

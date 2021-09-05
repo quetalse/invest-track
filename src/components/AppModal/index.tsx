@@ -1,7 +1,12 @@
 import Modal from 'react-bootstrap/Modal';
 
-export const AppModal = ({title, showModal, closeModal}) => {
+type PropsT = {
+    title: string
+    showModal: {show: boolean}
+    closeModal: () => void
+}
 
+export const AppModal: React.FC<PropsT> = ({title, showModal, closeModal}) => {
     return (
         <Modal
             show={showModal.show}

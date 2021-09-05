@@ -1,50 +1,39 @@
-// import { useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { auth, database } from "../../../firebase";
-
-// import Tabs from 'react-bootstrap/Tabs';
-// import Tab from 'react-bootstrap/Tab';
+import {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 
 /** APP COMPONENTS**/
-// import { AppLoader } from "../../../components/AppLoader";
-
-/** COMPONENTS **/
-// import { PortfolioCard } from "../PortfolioCard";
-// import { PortfolioModal } from "../PortfolioModal";
-
-
 import {AppLoader} from "../../../../components/AppLoader";
-import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useState} from "react";
+import {StockModal} from "../Modal";
 
+/** SIDE COMPONENTS **/
 
 /** ACTIONS **/
 import {getPortfolioTrackedStocks} from "../../../../store/actions/trackedStocks";
-import {StockModal} from "../Modal";
-// import { getPortfolios } from "../../../store/actions/portfolios";
-// import portfolio from "../../../assets/images/portfolio.png";
 
-// import "./styles.scss";
+/** TYPES **/
+import {rootStateT} from "../../../../store/reducers";
+import { Stock } from "../../../../@types/@stock";
 
 export const TabTrackedList = () => {
 
     const dispatch = useDispatch();
-    const { activePortfolio } = useSelector(state => state.portfolios);
     const [showModal, setShowModal] = useState(false);
-    const {data: trackedStockList, loading} = useSelector(state => state.trackedStocks);
+
+    const { activePortfolioId } = useSelector((state: rootStateT) => state.portfolios);
+    const {data: trackedStockList, loading} = useSelector((state: rootStateT) => state.trackedStocks);
 
     // Получаем список список ценых бумаг портфеля юзера когда выбран портфель
     useEffect(() => {
-        if(!trackedStockList && !loading && activePortfolio){
-            dispatch(getPortfolioTrackedStocks(activePortfolio));
+        if(!trackedStockList && !loading && activePortfolioId){
+            dispatch(getPortfolioTrackedStocks(activePortfolioId));
         }
-    }, [activePortfolio, trackedStockList, loading, dispatch])
+    }, [activePortfolioId, trackedStockList, loading, dispatch])
 
     const addStock = () => {
         setShowModal(true);
     }
 
-    const renderTable = (data) => {
+    const renderTable = (data: Array<Stock>) => {
 
         const hasData = !! data.length;
 
@@ -66,7 +55,7 @@ export const TabTrackedList = () => {
         <div className="tab-tracked-list">
             {loading && <AppLoader modifier={"app-loader_center"}/>}
             {trackedStockList ? renderTable(trackedStockList) : <em> Choose portfolio </em>}
-            <StockModal showModal={showModal} closeModal={ () => setShowModal(false)}/>
+            <StockModal showModal={{show: showModal}} closeModal={ () => setShowModal(false)}/>
         </div>
     )
 }

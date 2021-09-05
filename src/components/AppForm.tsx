@@ -2,18 +2,23 @@ import { useState } from 'react';
 import { useDispatch } from "react-redux";
 
 import { show } from "../store/actions/alert";
+//@ts-ignore
 import { add } from "../store/actions/stocks";
 
-export const AppForm = ({className}) => {
+type PropsT = {
+    className: string
+}
+
+export const AppForm: React.FC<PropsT> = ({className}) => {
 
     const dispatch = useDispatch();
-    const [value, setValue] = useState('');
+    const [value, setValue] = useState<string>('');
     // const {data, loading} = useSelector(state => state.stock);
 
-    const showAlert = (text, status) => dispatch(show(text, status));
-    const addStock = title => dispatch(add(title));
+    const showAlert = (text: string, status?: string) => dispatch(show(text, status));
+    const addStock = (title: string) => dispatch(add(title));
 
-    const submitHandler = event => {
+    const submitHandler: React.FormEventHandler<HTMLFormElement> = ((event) => {
         event.preventDefault();
 
         if (value.trim()){
@@ -28,7 +33,7 @@ export const AppForm = ({className}) => {
         }else{
             showAlert('Insert ticker or title stock', 'warning');
         }
-    }
+    })
 
     return (
         <form

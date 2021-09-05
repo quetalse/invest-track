@@ -1,6 +1,12 @@
 import './styles.scss';
 
-export const AppButton = ({modifier, title, handlerClick}) => {
+type PropsT = {
+    modifier: string
+    title: string | React.ReactElement<any, any>
+    handlerClick: () => void
+}
+
+export const AppButton: React.FC<PropsT & React.HTMLAttributes<HTMLDivElement>> = ({modifier, title, handlerClick}) => {
 
     // const dispatch = useDispatch();
     // const [value, setValue] = useState('');

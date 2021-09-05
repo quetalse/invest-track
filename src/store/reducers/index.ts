@@ -13,4 +13,7 @@ export const rootReducer = combineReducers({
     portfolios, // Users portfolios list
     stocks, // Stocks in chosen portfolio
     trackedStocks, // Tracked stocks in chosen portfolio
-})
+});
+
+type rootReducerT = typeof rootReducer;
+export type rootStateT = ReturnType<rootReducerT>;

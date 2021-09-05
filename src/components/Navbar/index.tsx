@@ -7,10 +7,11 @@ import { logOut } from "../../store/actions/auth";
 import { AppLogo } from "../AppLogo";
 
 import "./styles.scss";
+import {rootStateT} from "../../store/reducers";
 
-export const Navbar = () => {
+export const Navbar: React.FC = () => {
 
-    const user = useSelector(state => state.auth.user)
+    const user = useSelector((state: rootStateT) => state.auth.user)
 
     return (
         <nav className="app-navbar">

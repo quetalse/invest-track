@@ -1,16 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
 import { CSSTransition } from "react-transition-group";
 
+/** TYPES **/
+import {rootStateT} from "../../store/reducers";
+
 /** ACTIONS **/
 import { hide } from "../../store/actions/alert";
 
 import "./styles.scss";
 
-export const AppAlert = () => {
+
+export const AppAlert: React.FC = () => {
 
     const dispatch = useDispatch();
-    const alert = useSelector(state => state.alert)
-
+    const alert = useSelector((state: rootStateT) => state.alert)
     const hideAlert = () => dispatch(hide())
 
     return (

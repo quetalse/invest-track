@@ -1,16 +1,16 @@
-import {SET_PORTFOLIOS, ADD_PORTFOLIO, EDIT_PORTFOLIO, LOADING_PORTFOLIOS, SET_ACTIVE_PORTFOLIO, REMOVE_PORTFOLIO} from "../types";
+import {SET_PORTFOLIOS, ADD_PORTFOLIO, EDIT_PORTFOLIO, LOADING_PORTFOLIOS, SET_ACTIVE_PORTFOLIO_ID, REMOVE_PORTFOLIO} from "../types";
 import {auth, database} from "../../firebase";
 import firebase from "firebase/app";
 
-type Portfolio = {
-    title: string
-}
+// @TYPES
+import {Portfolio} from "../../@types/@portfolio";
+
 export const setPortfoliosLoading = (): {type: typeof LOADING_PORTFOLIOS} => ({
     type: LOADING_PORTFOLIOS
 });
 
-export const setActivePortfolio = (id: string): {type: typeof SET_ACTIVE_PORTFOLIO, payload: string} => ({
-    type: SET_ACTIVE_PORTFOLIO,
+export const setActivePortfolio = (id: string): {type: typeof SET_ACTIVE_PORTFOLIO_ID, payload: string} => ({
+    type: SET_ACTIVE_PORTFOLIO_ID,
     payload: id
 });
 

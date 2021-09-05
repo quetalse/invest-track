@@ -2,7 +2,12 @@ import Typewriter from "typewriter-effect";
 
 import "./styles.scss";
 
-export const AppLogo = ({modifier, isTyping}) => {
+type PropsT = {
+    modifier: string
+    isTyping: boolean
+}
+
+export const AppLogo: React.FC<PropsT> = ({modifier, isTyping}) => {
 
     return (
         <div className={`app-logo ${modifier}`}>

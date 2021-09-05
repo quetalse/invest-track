@@ -1,42 +1,32 @@
 import {useDispatch, useSelector} from "react-redux";
-
-// import { useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { auth, database } from "../../../firebase";
-
-// import Tabs from 'react-bootstrap/Tabs';
-// import Tab from 'react-bootstrap/Tab';
+/** SIDE COMPONENTS **/
+import { Line } from 'react-chartjs-2'
 
 /** APP COMPONENTS**/
 import {AppLoader} from "../../../../components/AppLoader";
 import {useEffect} from "react";
-// import {getPortfolios} from "../../../../store/actions/portfolios";
-
-/** COMPONENTS **/
-// import { PortfolioCard } from "../PortfolioCard";
-// import { PortfolioModal } from "../PortfolioModal";
-import { Line } from 'react-chartjs-2'
 
 /** ACTIONS **/
 import { getPortfolioStocks } from "../../../../store/actions/stocks";
-// import portfolio from "../../../assets/images/portfolio.png";
+import {rootStateT} from "../../../../store/reducers";
 
-// import "./styles.scss";
+/** TYPES **/
+import {Stock} from "../../../../@types/@stock";
 
 export const TabFinResult = () => {
 
     const dispatch = useDispatch();
-    const { activePortfolio } = useSelector(state => state.portfolios);
-    const {data: stockList, loading} = useSelector(state => state.stocks);
+    const { activePortfolioId } = useSelector((state: rootStateT) => state.portfolios);
+    const {data: stockList, loading} = useSelector((state: rootStateT) => state.stocks);
 
     // Получаем список список ценых бумаг портфеля юзера когда выбран портфель
     useEffect(() => {
-        if(!stockList && !loading && activePortfolio){
-            dispatch(getPortfolioStocks(activePortfolio));
+        if(!stockList && !loading && activePortfolioId){
+            dispatch(getPortfolioStocks(activePortfolioId));
         }
-    }, [activePortfolio, stockList, loading, dispatch])
+    }, [activePortfolioId, stockList, loading, dispatch])
 
-    const renderChart = (data) => {
+    const renderChart = (data: Array<Stock>) => {
 
         const hasData = ! data.length;
 
@@ -66,7 +56,7 @@ export const TabFinResult = () => {
     return (
         <div className="tab-fin-result">
             {loading && <AppLoader modifier={"app-loader_center"}/>}
-            {activePortfolio && stockList ? renderChart(stockList) : <em> Choose portfolio </em>}
+            {activePortfolioId && stockList ? renderChart(stockList) : <em> Choose portfolio </em>}
         </div>
     )
 }

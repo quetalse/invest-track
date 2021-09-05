@@ -6,29 +6,31 @@ import {useDispatch} from "react-redux";
 /** APP COMPONENTS**/
 
 /** ACTIONS **/
-import { addPortfolioStock } from "../../../../store/actions/stocks";
+import { addPortfolioStockAC } from "../../../../store/actions/stocks";
 // import { editPortfolio } from "../../../../store/actions/portfolios";
 
 import './style.scss';
 
 import portfolio from "../../../../assets/images/portfolio.png";
 
-export const StockModal = ({showModal, closeModal}) => {
+type PropsT = {
+    showModal: {show: boolean}
+    closeModal: () => void
+}
+
+export const StockModal: React.FC<PropsT> = ({showModal, closeModal}) => {
 
     const dispatch = useDispatch();
     const [title, setTitle] = useState('')
 
-    const handleChangeTitle = (event) => {
-
-
-
+    const handleChangeTitle:  React.ChangeEventHandler<HTMLInputElement> = (event) => {
         setTitle(event.target.value)
     }
 
     const handleAddPortfolioStock = () => {
 
         if(title.trim()){
-            dispatch(addPortfolioStock({
+            dispatch(addPortfolioStockAC('11', {
                 title
             }))
         }else {

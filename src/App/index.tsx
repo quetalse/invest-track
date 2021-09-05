@@ -13,7 +13,11 @@ import { NotFound } from "../screens/NotFound";
 
 import './styles.scss';
 
-export const App = () => {
+type Props = {
+    init?: string
+}
+
+export const App: React.FC<Props> = () => {
     return (
         <div className="application">
             <BrowserRouter>
