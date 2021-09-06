@@ -71,12 +71,12 @@ export const addPortfolio = (portfolio: Portfolio) => (dispatch: any) => {
     }
 }
 
-export const editPortfolio = (data: Portfolio & {portfolioId: string}) => (dispatch: any) => {
+export const editPortfolio = (data: Portfolio) => (dispatch: any) => {
     const currentUser: firebase.User | null = auth.currentUser;
 
     if(currentUser) {
         const uid: string = currentUser.uid;
-        const portfolioId = data.portfolioId;
+        const portfolioId = data.id;
         const portfoliosRef = database.ref('profiles/' + uid + '/portfolios/' + portfolioId);
 
         // console.log('portfoliosRef', portfoliosRef)
@@ -89,7 +89,7 @@ export const editPortfolio = (data: Portfolio & {portfolioId: string}) => (dispa
                 dispatch({
                     type: EDIT_PORTFOLIO,
                     payload: {
-                        portfolioId,
+                        id: portfolioId,
                         title: data.title
                     }
                 })

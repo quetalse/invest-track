@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Redirect, useHistory} from "react-router-dom";
 
-/** COMPONENTS**/
+/** APP COMPONENTS**/
 import { AppLoader } from "../../components/AppLoader";
 import { AppLogo } from "../../components/AppLogo";
 
@@ -12,13 +12,26 @@ import {signIn, signUp, setUser, setEmail, setPassword, setHasAccount} from "../
 /** FIREBASE **/
 import { auth } from "../../firebase";
 
+/** TYPES **/
+import {rootStateT} from "../../store/reducers";
+
 import './styles.scss';
 
-export const Login = (props) => {
+type PropsT = {
 
-    const history = useHistory();
+}
+
+type HistoryT = {
+    from: {
+        pathname: string;
+    };
+}
+
+export const Login: React.FC<PropsT> = (props) => {
+
+    const history = useHistory<HistoryT>();
     const dispatch = useDispatch();
-    const {loading, user, email, password, emailError, passwordError, hasAccount} = useSelector(state => {
+    const {loading, user, email, password, emailError, passwordError, hasAccount} = useSelector((state: rootStateT) => {
         const auth = state.auth;
 
         return {
@@ -40,7 +53,7 @@ export const Login = (props) => {
                 dispatch(setUser(user));
             }else{
                 setCheckUser(false);
-                dispatch(setUser(''));
+                dispatch(setUser(null));
             }
             // dispatch(setLoading(false))
         })
@@ -51,9 +64,19 @@ export const Login = (props) => {
         return <Redirect to={from} />
     }
 
+    const onclickEntry = () => {
+        if(email && password){
+            if(hasAccount){
+                dispatch(signIn({email, password}))
+            }else{
+                dispatch(signUp({email, password}))
+            }
+        }
+    }
+
     return(
         <div className="login-page">
-            {isCheckUser ? <AppLoader/> :
+            {isCheckUser ? <AppLoader modifier="test"/> :
                 <>
                     <AppLogo modifier="login-page__logo" isTyping={true}/>
                     <div className="login-page__form app-form">
@@ -67,7 +90,7 @@ export const Login = (props) => {
                                     placeholder="Email address"
                                     required
                                     autoFocus
-                                    value={email}
+                                    value={email || undefined}
                                     onChange={e => dispatch(setEmail(e.target.value))}
                                 />
                                 <label
@@ -83,7 +106,7 @@ export const Login = (props) => {
                                     className={`app-input__input ${passwordError && 'error'}`}
                                     placeholder="Password"
                                     required
-                                    value={password}
+                                    value={password || undefined}
                                     onChange={e => dispatch(setPassword(e.target.value))}
                                 />
                                 <label
@@ -94,10 +117,7 @@ export const Login = (props) => {
                             </div>
                             <button
                                 className="app-form__button"
-                                onClick={hasAccount ?
-                                    () => dispatch(signIn({email, password})) :
-                                    () => dispatch(signUp({email, password}))
-                                }
+                                onClick={onclickEntry}
                             >
                                 {hasAccount ? 'Sign in' : 'Sign up'}
                                 {loading && <AppLoader modifier="app-loader_sm" />}

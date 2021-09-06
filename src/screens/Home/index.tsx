@@ -1,15 +1,8 @@
-// import {useEffect} from 'react';
-// import { useDispatch } from "react-redux";
-
-/** COMPONENTS **/
+/** APP COMPONENTS **/
 import { PortfoliosList } from "./PortfoliosList";
 import { PortfolioOverview } from "./PortfolioOverview";
 
-/** APP COMPONENTS**/
-
-
 /** ACTIONS **/
-// import { getAll} from "../../store/actions/stocks";
 
 import "./styles.scss";
 

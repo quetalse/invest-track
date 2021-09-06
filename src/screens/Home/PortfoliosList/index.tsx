@@ -15,6 +15,8 @@ import { getPortfolios } from "../../../store/actions/portfolios";
 // import portfolio from "../../../assets/images/portfolio.png";
 
 import "./styles.scss";
+import {rootStateT} from "../../../store/reducers";
+import {Portfolio} from "../../../@types/@portfolio";
 
 // const PortfolioCard = ({title}) => {
 //
@@ -68,26 +70,41 @@ import "./styles.scss";
 //     )
 // }
 
+type ShowModalT = {
+    show: boolean,
+    action: string,
+    title: string,
+    portfolioId: string
+}
+
 export const PortfoliosList = () => {
 
     const dispatch = useDispatch();
-    const [showModal, setShowModal] = useState(false);
+    const [showModal, setShowModal] = useState<ShowModalT>({
+        show: false,
+        action: '',
+        title: '',
+        portfolioId: ''
+    });
 
-    const {data, loading} = useSelector(state => state.portfolios);
+    const {portfoliosData, loading} = useSelector((state: rootStateT) => state.portfolios);
+
 
     // Получаем список портфелей юзера если они не загружены и не загружаются
     useEffect(() => {
-        if(!data && !loading) dispatch(getPortfolios());
-    }, [dispatch, data, loading])
+        if(!portfoliosData && !loading) dispatch(getPortfolios());
+    }, [dispatch, portfoliosData, loading])
 
     const addPortfolio = () => {
         setShowModal({
             show: true,
-            action: 'add'
+            action: 'add',
+            title: '',
+            portfolioId: ''
         });
     }
 
-    const renderPortfolios = (data) => {
+    const renderPortfolios = (data: Portfolio[]) => {
 
         const haveData = !!data.length;
 
@@ -121,9 +138,14 @@ export const PortfoliosList = () => {
             </div>
             <div className="portfolios-list__body">
                 {loading && <AppLoader modifier={"app-loader_center"}/>}
-                {data && renderPortfolios(data)}
+                {portfoliosData && renderPortfolios(portfoliosData)}
             </div>
-            <PortfolioModal showModal={showModal} closeModal={ () => setShowModal(false)}/>
+            <PortfolioModal showModal={showModal} closeModal={ () => setShowModal({
+                show: false,
+                action: '',
+                title: '',
+                portfolioId: ''
+            })}/>
         </div>
     )
 }

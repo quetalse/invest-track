@@ -14,7 +14,19 @@ import './style.scss';
 
 import portfolio from "../../../../assets/images/portfolio.png";
 
-export const PortfolioModal = ({showModal, closeModal}) => {
+type PropsT = {
+    showModal: ShowModalT
+    closeModal: () => void
+}
+
+type ShowModalT = {
+    show: boolean,
+    action: string,
+    title: string,
+    portfolioId: string
+}
+
+export const PortfolioModal: React.FC<PropsT> = ({showModal, closeModal}) => {
 
     const dispatch = useDispatch();
     const [title, setTitle] = useState('')
@@ -23,7 +35,7 @@ export const PortfolioModal = ({showModal, closeModal}) => {
         if(showModal.action === 'edit') setTitle(showModal.title);
     }, [showModal])
 
-    const handleChangeTitle = (event) => {
+    const handleChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(event.target.value)
     }
     const handleAddPortfolio = () => {
@@ -31,11 +43,12 @@ export const PortfolioModal = ({showModal, closeModal}) => {
         if(title.trim()){
             if(showModal.action === 'edit'){
                 dispatch(editPortfolio({
-                    title,
-                    portfolioId: showModal.portfolioId
+                    id: showModal.portfolioId,
+                    title
                 }));
             }else{
                 dispatch(addPortfolio({
+                    id: showModal.portfolioId,
                     title
                 }))
             }
