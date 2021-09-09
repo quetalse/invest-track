@@ -57,7 +57,7 @@ export const PortfolioCard: React.FC<PropsT> = ({title, portfolioId}) => {
             </div>
             <div className="portfolio-card__actions">
                 <div className="portfolio-card__btn">
-                    <AppButton className="portfolio-card__btn" modifier='' title="Overview" handlerClick={handleOverview}/>
+                    <AppButton  modifier='' title="Overview" handlerClick={handleOverview}/>
                 </div>
                 <div className="portfolio-card__btn">
                     <AppButton title={(<i className="fa fa-pencil" aria-hidden="true"/>)} handlerClick={handleEdit}/>

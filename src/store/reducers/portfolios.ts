@@ -7,7 +7,9 @@ import {
     SET_ACTIVE_PORTFOLIO_ID
 } from "../types";
 
+/** @TYPES **/
 import { Portfolio } from "../../@types/@portfolio";
+import { rootPortfoliosActionsT } from "../actions/portfolios";
 
 interface Handlers {
     [key: string]: (a: initialStateT, b?: any) => initialStateT
@@ -49,7 +51,7 @@ const initialState = {
 
 type initialStateT = typeof initialState;
 
-export const portfolios = (state: initialStateT = initialState, action: any) => {
+export const portfolios = (state: initialStateT = initialState, action: rootPortfoliosActionsT) => {
     const handle = handlers[action.type] || handlers.DEFAULT;
     return handle(state, action);
 }

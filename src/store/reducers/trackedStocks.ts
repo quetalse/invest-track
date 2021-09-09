@@ -1,10 +1,13 @@
-import {Stock} from "../../@types/@stock";
 import {
     LOADING_PORTFOLIO_TRACKED_STOCKS,
     ADD_PORTFOLIO_TRACKED_STOCK,
     GET_PORTFOLIO_TRACKED_STOCKS,
     REMOVE_PORTFOLIO_TRACKED_STOCK
 } from "../types";
+
+/** @TYPES **/
+import {rootTrackedStocksActionsT} from "../actions/trackedStocks";
+import {Stock} from "../../@types/@stock";
 
 interface Handlers {
     [key: string]: (a: initialStateT, b?: any) => initialStateT
@@ -26,7 +29,7 @@ const initialState = {
 type initialStateT = typeof initialState;
 
 
-export const trackedStocks = (state: initialStateT = initialState, action: any) => {
+export const trackedStocks = (state: initialStateT = initialState, action: rootTrackedStocksActionsT) => {
     const handle = handlers[action.type] || handlers.DEFAULT;
     return handle(state, action);
 }

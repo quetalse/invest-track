@@ -13,6 +13,15 @@ import {
 import { auth } from "../../firebase";
 import firebase from "firebase/app";
 
+type authAcT =
+    typeof setLoading | typeof setHasAccount |
+    typeof setUser | typeof setEmail |
+    typeof setPassword | typeof clearInputs |
+    typeof clearErrors | typeof emailError |
+    typeof passwordError;
+
+export type rootAuthActionsT = ReturnType<authAcT>;
+
 export const setLoading = (status: boolean): {type: typeof SET_LOADING, payload: boolean} => ({
     type: SET_LOADING,
     payload: status

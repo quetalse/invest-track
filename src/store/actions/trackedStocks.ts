@@ -9,8 +9,16 @@ import {
     // REMOVE_PORTFOLIO_TRACKED_STOCK,
 } from "../types";
 
+type trackedStocksAcT = typeof setPortfolioTrackedStocksLoading | typeof setPortfolioTrackedStocks
 
-export const setPortfolioTrackedStocksLoading = (): {type: typeof LOADING_PORTFOLIO_TRACKED_STOCKS} => ({type: LOADING_PORTFOLIO_TRACKED_STOCKS});
+export type rootTrackedStocksActionsT = ReturnType<trackedStocksAcT>;
+
+export const setPortfolioTrackedStocksLoading = (): {
+    type: typeof LOADING_PORTFOLIO_TRACKED_STOCKS
+} => ({
+    type: LOADING_PORTFOLIO_TRACKED_STOCKS
+});
+
 export const setPortfolioTrackedStocks = (payload: Array<Stock>): {
     type: typeof GET_PORTFOLIO_TRACKED_STOCKS
     payload: Array<Stock>

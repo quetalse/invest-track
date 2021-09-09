@@ -9,9 +9,16 @@ import {
     // REMOVE_PORTFOLIO_STOCK,
 } from "../types";
 
+type stocksAcT= typeof setPortfolioStocksLoading | typeof setPortfolioStocks | typeof addPortfolioStock;
 
+export type rootStocksActionsT = ReturnType<stocksAcT>;
 
-export const setPortfolioStocksLoading = (): {type: typeof LOADING_PORTFOLIO_STOCKS} => ({type: LOADING_PORTFOLIO_STOCKS});
+export const setPortfolioStocksLoading = (): {
+    type: typeof LOADING_PORTFOLIO_STOCKS
+} => ({
+    type: LOADING_PORTFOLIO_STOCKS
+});
+
 export const setPortfolioStocks = (stocks: Array<Stock>): {
     type: typeof GET_PORTFOLIO_STOCKS
     payload: Array<Stock>

@@ -1,5 +1,6 @@
 import {SET_LOADING, SET_USER, SET_EMAIL, SET_PASSWORD, CLEAR_INPUTS, CLEAR_ERRORS, EMAIL_ERROR, PASSWORD_ERROR, SET_ACCOUNT} from "../types";
 import firebase from "firebase/app";
+import {rootAuthActionsT} from "../actions/auth";
 
 interface Handlers {
     [key: string]: (a: initialStateT, b?: any) => initialStateT
@@ -30,7 +31,7 @@ const initialState = {
 
 type initialStateT = typeof initialState;
 
-export const auth = (state: initialStateT = initialState, action: any): initialStateT => {
+export const auth = (state: initialStateT = initialState, action: rootAuthActionsT): initialStateT => {
     const handle = handlers[action.type] || handlers.DEFAULT;
     return handle(state, action);
 }

@@ -7,7 +7,9 @@ import {AppLoader} from "./AppLoader";
 import {rootStateT} from "../store/reducers";
 
 type PropsT = {
-    component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
+    component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>
+    path: string
+    exact: boolean
 }
 
 export const ProtectedRoute: React.FC<PropsT> = ({component: Component, ...rest }) => {

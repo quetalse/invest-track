@@ -1,4 +1,5 @@
 import { Stock } from "../../@types/@stock";
+import { rootStocksActionsT } from "../actions/stocks";
 import {
     LOADING_PORTFOLIO_STOCKS,
     ADD_PORTFOLIO_STOCK,
@@ -31,7 +32,7 @@ const initialState = {
 type initialStateT = typeof initialState;
 
 
-export const stocks = (state: initialStateT = initialState, action: any) => {
+export const stocks = (state: initialStateT = initialState, action: rootStocksActionsT) => {
     const handle = handlers[action.type] || handlers.DEFAULT;
 
     return handle(state, action);

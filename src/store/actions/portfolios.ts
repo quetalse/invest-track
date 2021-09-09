@@ -5,6 +5,10 @@ import firebase from "firebase/app";
 // @TYPES
 import {Portfolio} from "../../@types/@portfolio";
 
+type portfoliosAcT = typeof setPortfoliosLoading | typeof setActivePortfolio | typeof setPortfolios
+
+export type rootPortfoliosActionsT = ReturnType<portfoliosAcT>;
+
 export const setPortfoliosLoading = (): {type: typeof LOADING_PORTFOLIOS} => ({
     type: LOADING_PORTFOLIOS
 });
